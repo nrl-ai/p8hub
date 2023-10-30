@@ -33,7 +33,7 @@ export function ServiceCard({
   status: string
 }) {
   return (
-    <Card className="border border-gray-500 rounded-md shadow-sm bg-gray-200 dark:bg-slate-600">
+    <Card className="border border-gray-600 rounded-md shadow-sm">
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{name}</CardTitle>

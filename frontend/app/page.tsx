@@ -1,11 +1,27 @@
-import Link from "next/link"
-
-import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
 import { ServiceCard } from "@/components/service-card"
 import { PlusCircledIcon } from "@radix-ui/react-icons"
 import { Button } from "@/registry/default/ui/button"
+import { SystemMonitor } from "@/components/system-monitor"
+import { AppTemplate } from "@/components/app-template"
 
+const appTemplates = [
+  {
+    name: "Ollama LLM",
+    description: "Chat with local llamas",
+  },
+  {
+    name: "PrivateGPT",
+    description: "Ask your documents questions",
+  },
+  {
+    name: "Stable Duffusion WebUI",
+    description: "Generate images from text",
+  },
+  {
+    name: "LocalPilot",
+    description: "Code with AI assistance",
+  },
+]
 
 const runningServices = [
   {
@@ -38,10 +54,13 @@ export default function IndexPage() {
           Private AI Hub
         </h1>
         <p className="max-w-[700px] text-lg text-muted-foreground">
-          Host and use your own Generative AI Services.
+          Host and use your own Generative AI Services. Keep everything private.
         </p>
       </div>
-      <div className="flex items-center justify-between space-y-2">
+      <div className="w-full">
+        <SystemMonitor />
+      </div>
+      <div className="flex items-center justify-between space-y-2 mt-4">
         <h2 className="text-2xl font-bold tracking-tight">Running Services</h2>
         <div className="flex items-center space-x-2">
           <Button>
@@ -58,6 +77,20 @@ export default function IndexPage() {
               name={service.name}
               description={service.description}
               status={service.status}
+            />
+          ))
+        }
+      </div>
+      <div className="flex items-center justify-between space-y-2 mt-4">
+        <h2 className="text-2xl font-bold tracking-tight">Deploy New Services</h2>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+        {
+          appTemplates.map((service) => (
+            <AppTemplate
+              key={service.name}
+              name={service.name}
+              description={service.description}
             />
           ))
         }
