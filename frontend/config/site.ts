@@ -1,18 +1,16 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "P8Hub",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Host your own Generative AI Services.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Information",
+      href: "https://github.com/vietanhdev/p8hub",
     },
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    github: "https://github.com/vietanhdev/p8hub",
   },
 }
