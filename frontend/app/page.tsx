@@ -6,6 +6,30 @@ import { ServiceCard } from "@/components/service-card"
 import { PlusCircledIcon } from "@radix-ui/react-icons"
 import { Button } from "@/registry/default/ui/button"
 
+
+const runningServices = [
+  {
+    name: "Ollama LLM",
+    description: "Chat with local llamas",
+    status: "running",
+  },
+  {
+    name: "PrivateGPT",
+    description: "Ask your documents questions",
+    status: "running",
+  },
+  {
+    name: "Stable Duffusion WebUI",
+    description: "Generate images from text",
+    status: "running",
+  },
+  {
+    name: "LocalPilot",
+    description: "Code with AI assistance",
+    status: "running",
+  },
+]
+
 export default function IndexPage() {
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -27,12 +51,16 @@ export default function IndexPage() {
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
-        <ServiceCard />
+        {
+          runningServices.map((service) => (
+            <ServiceCard
+              key={service.name}
+              name={service.name}
+              description={service.description}
+              status={service.status}
+            />
+          ))
+        }
       </div>
     </section>
   )
