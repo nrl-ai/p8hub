@@ -1,0 +1,47 @@
+---
+files: ^(.*\.(py|json|md|sh|yaml|cfg|txt))$
+exclude: ^(\.[^/]*cache/.*|.*/_user.py|source_documents/)$
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+        args: [--unsafe]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        exclude-files: \.md$
+      - id: check-json
+      - id: mixed-line-ending
+      - id: check-merge-conflict
+      - id: check-docstring-first
+      - id: fix-byte-order-marker
+      - id: check-case-conflict
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
+        args:
+          - --no-warnings
+          - -d
+          - '{extends: relaxed, rules: {line-length: {max: 90}}}'
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        exclude: .*/__init__.py
+        args:
+          - --in-place
+          - --remove-all-unused-imports
+          - --expand-star-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.4.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
