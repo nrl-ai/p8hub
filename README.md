@@ -80,3 +80,4 @@ npm run dev
 ## References
 
 - Next Template: [https://github.com/shadcn-ui/next-template](https://github.com/shadcn-ui/next-template).
+- PAutoBot: [https://github.com/nrl-ai/pautobot](https://github.com/nrl-ai/pautobot).
