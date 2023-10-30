@@ -1,5 +1,22 @@
 # Private AI Hub (P8Hub)
 
+Host and use your own Generative AI Services. Keep everything private.
+
+## TODO
+
+Some features that I want to add to this project:
+
+- [ ] Service management (start, stop, restart, delete).
+- [ ] General chatbot service with Ollama.
+- [ ] Document chat service with PrivateGPT.
+- [ ] Code generation / auto-completion service with LocalPilot.
+- [ ] Image generation service with InvokeAI.
+- [ ] Add documentation.
+- [ ] Add tests.
+- [ ] Desktop app.
+- [ ] Custom service.
+
+
 ## I. Installation and Usage
 
 ### 1. Installation

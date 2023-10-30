@@ -11,7 +11,7 @@ export function SystemMonitor() {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Running Services
+                        Number of Services
                     </CardTitle>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ export function SystemMonitor() {
                 <CardContent>
                     <div className="text-2xl font-bold">4</div>
                     <p className="text-xs text-muted-foreground">
-                      Max capacity: 10
+                      Managed by P8Hub
                     </p>
                 </CardContent>
             </Card>
