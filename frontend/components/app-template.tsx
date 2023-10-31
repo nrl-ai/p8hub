@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/default/ui/card"
-import { ToastAction } from "@/registry/default/ui/toast"
 import { useToast } from "@/registry/default/ui/use-toast"
 
 export function AppTemplate({
@@ -40,13 +39,11 @@ export function AppTemplate({
       })
       .catch(async (err) => {
         const response = await err.json()
-        console.log(response)
         const errorDetail = response.detail
         toast({
           variant: "destructive",
           title: "Error deploying service: " + errorDetail,
           description: err.detail,
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
         })
       })
   }

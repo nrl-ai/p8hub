@@ -10,25 +10,52 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
 import { Separator } from "@/registry/default/ui/separator"
 import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
+import { useToast } from "@/registry/default/ui/use-toast"
+
 
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
+  id,
   name,
   description,
   status,
 }: {
+  id: number
   name: string
   description: string
   status: string
 }) {
+  const { toast } = useToast()
+
+  const deleteService = (id: number) => async () => {
+    await fetch(`/api/services/${id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (!res.ok) {
+        throw res
+      }
+      toast({
+        variant: "default",
+        title: "Service deleted",
+        description: "Your service has been deleted",
+      })
+    }).catch(async (err) => {
+      const response = await err.json()
+      const errorDetail = response.detail
+      toast({
+        variant: "destructive",
+        title: "Error deleting service: " + errorDetail,
+        description: err.detail,
+      })
+    })
+  }
+
+
   return (
     <Card className="border border-gray-600 rounded-md shadow-sm">
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
@@ -57,7 +84,7 @@ export function ServiceCard({
             >
               <DropdownMenuCheckboxItem>Logs</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Restart</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Delete</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={deleteService(id)}>Delete</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

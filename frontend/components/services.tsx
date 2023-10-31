@@ -15,8 +15,9 @@ export function Services() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
       {appTemplates &&
-        appTemplates.map((app: { name: string; description: string }) => (
+        appTemplates.map((app: { id: number, name: string; description: string }) => (
           <ServiceCard
+            id={app.id}
             key={app.name}
             name={app.name}
             description={app.description}
