@@ -58,9 +58,12 @@ export function AppTemplate({
           <CardTitle>{name}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </div>
-        <Button variant="default" onClick={() => {
-          deployService(id)
-        }}>
+        <Button
+          variant="default"
+          onClick={() => {
+            deployService(id)
+          }}
+        >
           Deploy
         </Button>
       </CardHeader>

@@ -1,6 +1,8 @@
 import psutil
 from fastapi import APIRouter
 
+from p8hub.database import session, Service
+
 router = APIRouter(
     prefix="/api/system_monitor",
     tags=["System Monitor"],
@@ -8,6 +10,7 @@ router = APIRouter(
 
 @router.get("")
 async def get_system_monitor():
+    num_services = session.query(Service).count()
     return {
         "cpu_percent": psutil.cpu_percent(),
         "num_cpu_cores": psutil.cpu_count(),
@@ -19,4 +22,5 @@ async def get_system_monitor():
         "swap_total": psutil.swap_memory().total,
         "swap_used": psutil.swap_memory().used,
         "swap_free": psutil.swap_memory().free,
+        "num_services": num_services,
     }

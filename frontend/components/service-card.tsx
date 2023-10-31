@@ -13,49 +13,49 @@ import {
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
 import { Separator } from "@/registry/default/ui/separator"
-import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 import { useToast } from "@/registry/default/ui/use-toast"
-
+import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
-  id,
-  name,
-  description,
-  status,
+  service: { id, name, description, status, service_port },
 }: {
-  id: number
-  name: string
-  description: string
-  status: string
+  service: {
+    id: number
+    name: string
+    description: string
+    status: string
+    service_port: number
+  }
 }) {
   const { toast } = useToast()
 
   const deleteService = (id: number) => async () => {
     await fetch(`/api/services/${id}`, {
       method: "DELETE",
-    }).then((res) => {
-      if (!res.ok) {
-        throw res
-      }
-      toast({
-        variant: "default",
-        title: "Service deleted",
-        description: "Your service has been deleted",
-      })
-      window.location.reload()
-    }).catch(async (err) => {
-      const response = await err.json()
-      const errorDetail = response.detail
-      toast({
-        variant: "destructive",
-        title: "Error deleting service: " + errorDetail,
-        description: err.detail,
-      })
     })
+      .then((res) => {
+        if (!res.ok) {
+          throw res
+        }
+        toast({
+          variant: "default",
+          title: "Service deleted",
+          description: "Your service has been deleted",
+        })
+        window.location.reload()
+      })
+      .catch(async (err) => {
+        const response = await err.json()
+        const errorDetail = response.detail
+        toast({
+          variant: "destructive",
+          title: "Error deleting service: " + errorDetail,
+          description: err.detail,
+        })
+      })
   }
-
 
   return (
     <Card className="border border-gray-600 rounded-md shadow-sm">
@@ -63,12 +63,18 @@ export function ServiceCard({
         <div className="space-y-1">
           <CardTitle>{name}</CardTitle>
           <CardDescription>
-            {description} - {status}
+            {description}
+            <br />
+            <b>Port:</b> {service_port}
           </CardDescription>
         </div>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-          <Button variant="secondary" className="px-3 shadow-none"
-            onClick={() => {window.open(`http://localhost:3000`)}}
+          <Button
+            variant="secondary"
+            className="px-3 shadow-none"
+            onClick={() => {
+              window.open(`http://localhost:${service_port}`)
+            }}
           >
             Open
           </Button>
@@ -86,8 +92,9 @@ export function ServiceCard({
               forceMount
             >
               <DropdownMenuCheckboxItem>Logs</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Restart</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem onClick={deleteService(id)}>Delete</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem onClick={deleteService(id)}>
+                Delete
+              </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

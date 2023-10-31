@@ -15,14 +15,16 @@ export function AppTemplates() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
       {appTemplates &&
-        appTemplates.map((app: { id: string, name: string; description: string }) => (
-          <AppTemplate
-            id={app.id}
-            key={app.name}
-            name={app.name}
-            description={app.description}
-          />
-        ))}
+        appTemplates.map(
+          (app: { id: string; name: string; description: string }) => (
+            <AppTemplate
+              id={app.id}
+              key={app.name}
+              name={app.name}
+              description={app.description}
+            />
+          )
+        )}
       {appTemplates === undefined && (
         <>
           <AppTemplateSkeleton />

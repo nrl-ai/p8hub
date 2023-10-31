@@ -41,7 +41,7 @@ export function SystemMonitor() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">4</div>
+          <div className="text-2xl font-bold">{data?.num_services}</div>
           <p className="text-xs text-muted-foreground">Managed by P8Hub</p>
         </CardContent>
       </Card>

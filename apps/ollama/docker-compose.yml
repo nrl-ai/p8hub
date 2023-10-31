@@ -15,7 +15,7 @@ services:
     image: vietanhdev/p8hub-ollama-webui
     restart: always
     ports:
-      - 3000:80
+      - ${P8HUB_SERVICE_PORT}:80
     networks:
       - ollama
 

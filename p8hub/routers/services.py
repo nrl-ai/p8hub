@@ -28,7 +28,7 @@ class NewServiceRequest(BaseModel):
 def new_service(data: NewServiceRequest):
     """Run application"""
     try:
-        service_unique_name = service_manager.create_service(data.app_id)
+        service_unique_name, port = service_manager.create_service(data.app_id)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -42,7 +42,7 @@ def new_service(data: NewServiceRequest):
         app_id=data.app_id,
         name=data.name if data.name else app["name"],
         description=data.description if data.description else app["description"],
-        service_port=data.service_port,
+        service_port=port,
     )
     session.add(new_service)
     session.commit()
