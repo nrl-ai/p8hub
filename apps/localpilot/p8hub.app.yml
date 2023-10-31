@@ -1,0 +1,5 @@
+id: localpilot
+name: LocalPilot
+description: Code with local AI assistants
+version: "0.0.1"
+type: compose

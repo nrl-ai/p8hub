@@ -1,4 +1,5 @@
-name: "Ollama LLM"
-description: "Chat with local LLM with Ollama.ai"
+id: ollama
+name: Ollama LLM
+description: Chat with local LLM with Ollama.ai
 version: "0.0.1"
 type: compose

@@ -9,7 +9,7 @@ router = APIRouter(
 
 app_manager = AppManager()
 
-@router.get("/")
+@router.get("")
 async def apps():
     return app_manager.get_apps()
 

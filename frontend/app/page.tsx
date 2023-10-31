@@ -1,28 +1,9 @@
 import { Button } from "@/registry/default/ui/button"
 import { PlusCircledIcon } from "@radix-ui/react-icons"
 
-import { AppTemplate } from "@/components/app-template"
+import { AppTemplates } from "@/components/app-templates"
 import { ServiceCard } from "@/components/service-card"
 import { SystemMonitor } from "@/components/system-monitor"
-
-const appTemplates = [
-  {
-    name: "Ollama LLM",
-    description: "Chat with local llamas",
-  },
-  {
-    name: "PrivateGPT",
-    description: "Ask your documents questions",
-  },
-  {
-    name: "Stable Duffusion WebUI",
-    description: "Generate images from text",
-  },
-  {
-    name: "LocalPilot",
-    description: "Code with AI assistance",
-  },
-]
 
 const runningServices = [
   {
@@ -85,15 +66,7 @@ export default function IndexPage() {
           Deploy New Services
         </h2>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {appTemplates.map((service) => (
-          <AppTemplate
-            key={service.name}
-            name={service.name}
-            description={service.description}
-          />
-        ))}
-      </div>
+      <AppTemplates />
     </section>
   )
 }

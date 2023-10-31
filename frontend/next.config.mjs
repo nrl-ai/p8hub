@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development") {
     },
   ]
 } else {
-  nextConfig.output = "export";
+  nextConfig.output = "export"
 }
 
 export default nextConfig
