@@ -6,8 +6,9 @@ Host and use your own Generative AI Services. Keep everything private.
 
 Some features that I want to add to this project:
 
-- [ ] Service management (start, stop, restart, delete).
-- [ ] General chatbot service with Ollama.
+- [x] Monitor hardware resources.
+- [x] Service management (start, stop/delete).
+- [x] General chatbot service with Ollama.
 - [ ] Document chat service with PrivateGPT.
 - [ ] Code generation / auto-completion service with LocalPilot.
 - [ ] Image generation service with InvokeAI.
