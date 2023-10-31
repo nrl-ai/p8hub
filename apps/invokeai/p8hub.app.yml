@@ -3,3 +3,5 @@ name: InvokeAI
 description: InvokeAI is an implementation of Stable Diffusion, the open source text-to-image and image-to-image generator
 version: "0.0.1"
 type: compose
+default_service_port: 3000
+deployable: false

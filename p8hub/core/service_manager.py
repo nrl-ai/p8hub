@@ -19,6 +19,8 @@ class ServiceManager:
     def create_service(self, app_id: str):
         """Create a new service"""
         app = self.app_manager.get_app(app_id)
+        if not app.get("deployable", True):
+            raise Exception("App is not deployable")
 
         service_unique_name = self.get_service_unique_name(app_id)
         app_dir = pathlib.Path(app["app_dir"])

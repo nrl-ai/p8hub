@@ -9,22 +9,24 @@ import {
 import { useToast } from "@/registry/default/ui/use-toast"
 
 export function AppTemplate({
+  id,
   name,
   description,
 }: {
+  id: string
   name: string
   description: string
 }) {
   const { toast } = useToast()
 
-  const deployService = async () => {
+  const deployService = async (id: string) => {
     await fetch("/api/services", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        app_id: "ollama",
+        app_id: id,
       }),
     })
       .then((res) => {
@@ -36,6 +38,7 @@ export function AppTemplate({
           title: "Service deployed",
           description: "Your service has been deployed",
         })
+        window.location.reload()
       })
       .catch(async (err) => {
         const response = await err.json()
@@ -55,7 +58,9 @@ export function AppTemplate({
           <CardTitle>{name}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </div>
-        <Button variant="default" onClick={deployService}>
+        <Button variant="default" onClick={() => {
+          deployService(id)
+        }}>
           Deploy
         </Button>
       </CardHeader>

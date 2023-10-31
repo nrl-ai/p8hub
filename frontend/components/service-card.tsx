@@ -44,6 +44,7 @@ export function ServiceCard({
         title: "Service deleted",
         description: "Your service has been deleted",
       })
+      window.location.reload()
     }).catch(async (err) => {
       const response = await err.json()
       const errorDetail = response.detail
@@ -66,8 +67,10 @@ export function ServiceCard({
           </CardDescription>
         </div>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-          <Button variant="secondary" className="px-3 shadow-none">
-            Action
+          <Button variant="secondary" className="px-3 shadow-none"
+            onClick={() => {window.open(`http://localhost:3000`)}}
+          >
+            Open
           </Button>
           <Separator orientation="vertical" className="h-[20px]" />
           <DropdownMenu>
@@ -97,7 +100,7 @@ export function ServiceCard({
             />
             {status}
           </div>
-          <div>Created April 2023</div>
+          <div>Uptime: 100d</div>
         </div>
       </CardContent>
     </Card>
