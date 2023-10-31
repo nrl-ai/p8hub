@@ -28,6 +28,7 @@ def get_install_requires():
         "alembic==1.11.1",
         "requests",
         "uvicorn==0.23.2",
+        "PyYAML==6.0.1"
     ]
 
     return install_requires

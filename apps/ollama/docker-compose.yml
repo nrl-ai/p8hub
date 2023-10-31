@@ -10,14 +10,12 @@ services:
       - OLLAMA_ORIGINS=*
     networks:
       - ollama
-    ports:
-      - 11434:11434
 
   ollama-web:
     image: vietanhdev/p8hub-ollama-webui
     restart: always
     ports:
-      - 3000:8080
+      - 3000:80
     networks:
       - ollama
 

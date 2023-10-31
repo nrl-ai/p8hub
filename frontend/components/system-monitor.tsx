@@ -1,11 +1,20 @@
+"use client";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/registry/default/ui/card"
+import useSWR from 'swr';
 
 export function SystemMonitor() {
+  const { data } = useSWR('/api/system_monitor', (url) => fetch(url).then((res) => res.json()), { refreshInterval: 3000 });
+
+  const formatMemory = (memory: number) => {
+    let result = Math.round(memory / 1024 / 1024 / 1024 * 10) / 10;
+    return isNaN(result) ? "-" : result;
+  }
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -48,8 +57,8 @@ export function SystemMonitor() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">86%</div>
-          <p className="text-xs text-muted-foreground">Number of cores: 4</p>
+          <div className="text-2xl font-bold">{data?.cpu_percent}%</div>
+          <p className="text-xs text-muted-foreground">Number of cores: {data?.num_cpu_cores}</p>
         </CardContent>
       </Card>
       <Card>
@@ -69,8 +78,8 @@ export function SystemMonitor() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">1.2GB / 32GB</div>
-          <p className="text-xs text-muted-foreground">Percentage: 3.75%</p>
+          <div className="text-2xl font-bold">{formatMemory(data?.memory_used)} GB / {formatMemory(data?.memory_total)} GB</div>
+          <p className="text-xs text-muted-foreground">Percentage: {data?.memory_percent}%</p>
         </CardContent>
       </Card>
       <Card>
@@ -90,9 +99,9 @@ export function SystemMonitor() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">1</div>
+          <div className="text-2xl font-bold">...</div>
           <p className="text-xs text-muted-foreground">
-            Average utilization: 20%
+            Average utilization: ...
           </p>
         </CardContent>
       </Card>

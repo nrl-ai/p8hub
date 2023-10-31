@@ -12,7 +12,7 @@ from p8hub import globals
 from p8hub.app_info import __appname__, __description__, __version__
 from p8hub.config import DATA_ROOT
 from p8hub.database import engine
-from p8hub.routers import docker
+from p8hub.routers import docker, apps, system_monitor
 from p8hub.utils import extract_frontend_dist
 
 
@@ -66,12 +66,13 @@ def main():
     )
 
     app.include_router(docker.router)
+    app.include_router(apps.router)
+    app.include_router(system_monitor.router)
     app.mount(
         "/", StaticFiles(directory=static_folder, html=True), name="static"
     )
 
-    uvicorn.run(app, host=args.host, port=args.port, reload=False, workers=1)
-
+    uvicorn.run(app, host=args.host, port=args.port, workers=1)
 
 if __name__ == "__main__":
     main()
