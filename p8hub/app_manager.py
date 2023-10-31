@@ -1,7 +1,7 @@
 import os
 import yaml
-import pathlib
 
+from .exceptions import AppNotFound
 
 class AppManager:
     """Manage applications"""
@@ -24,8 +24,16 @@ class AppManager:
         app_config = os.path.join(app_dir, "p8hub.app.yml")
         with open(app_config, "r") as f:
             config = yaml.safe_load(f)
+            config.update({"app_dir": app_dir})
         return config
 
     def get_apps(self):
         """Get applications"""
         return self.apps
+
+    def get_app(self, app_id: str):
+        """Get application by ID"""
+        for app in self.apps:
+            if app["id"] == app_id:
+                return app
+        raise AppNotFound("App not found: {}".format(app_id))

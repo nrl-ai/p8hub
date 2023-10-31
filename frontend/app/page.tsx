@@ -1,32 +1,7 @@
-import { Button } from "@/registry/default/ui/button"
-import { PlusCircledIcon } from "@radix-ui/react-icons"
-
 import { AppTemplates } from "@/components/app-templates"
-import { ServiceCard } from "@/components/service-card"
+import { CreateService } from "@/components/create-service"
+import { Services } from "@/components/services"
 import { SystemMonitor } from "@/components/system-monitor"
-
-const runningServices = [
-  {
-    name: "Ollama LLM",
-    description: "Chat with local llamas",
-    status: "running",
-  },
-  {
-    name: "PrivateGPT",
-    description: "Ask your documents questions",
-    status: "running",
-  },
-  {
-    name: "Stable Duffusion WebUI",
-    description: "Generate images from text",
-    status: "running",
-  },
-  {
-    name: "LocalPilot",
-    description: "Code with AI assistance",
-    status: "running",
-  },
-]
 
 export default function IndexPage() {
   return (
@@ -45,22 +20,10 @@ export default function IndexPage() {
       <div className="flex items-center justify-between space-y-2 mt-4">
         <h2 className="text-2xl font-bold tracking-tight">Running Services</h2>
         <div className="flex items-center space-x-2">
-          <Button>
-            <PlusCircledIcon className="mr-2 h-4 w-4" />
-            Create Service
-          </Button>
+          <CreateService />
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {runningServices.map((service) => (
-          <ServiceCard
-            key={service.name}
-            name={service.name}
-            description={service.description}
-            status={service.status}
-          />
-        ))}
-      </div>
+      <Services />
       <div className="flex items-center justify-between space-y-2 mt-4">
         <h2 className="text-2xl font-bold tracking-tight">
           Deploy New Services

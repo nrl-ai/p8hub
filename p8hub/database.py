@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 
 from p8hub.config import DATABASE_PATH
 
@@ -10,3 +11,17 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 session = SessionLocal()
 
 Base = declarative_base()
+
+
+class Service(Base):
+    __tablename__ = "services"
+
+    id = Column(Integer, primary_key=True, index=True)
+    service_unique_name = Column(String, unique=True, index=True)
+    app_id = Column(String, nullable=True)
+    name = Column(String, index=True, nullable=True)
+    description = Column(String, nullable=True)
+    service_port = Column(Integer, nullable=True)
+
+
+Base.metadata.create_all(bind=engine)

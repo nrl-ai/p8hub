@@ -8,12 +8,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from p8hub import globals
 from p8hub.app_info import __appname__, __description__, __version__
 from p8hub.config import DATA_ROOT
 from p8hub.database import engine
-from p8hub.routers import docker, apps, system_monitor
+from p8hub.routers import apps, system_monitor, services
 from p8hub.utils import extract_frontend_dist
+from p8hub.database import Base
 
 
 def main():
@@ -51,7 +51,7 @@ def main():
     extract_frontend_dist(static_folder)
 
     logging.info("Creating database tables...")
-    # models.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
     app = FastAPI(
         title=__appname__,
@@ -65,8 +65,8 @@ def main():
         expose_headers=["*"],
     )
 
-    app.include_router(docker.router)
     app.include_router(apps.router)
+    app.include_router(services.router)
     app.include_router(system_monitor.router)
     app.mount(
         "/", StaticFiles(directory=static_folder, html=True), name="static"

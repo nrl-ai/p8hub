@@ -12,7 +12,7 @@ export function SystemMonitor() {
   const { data } = useSWR(
     "/api/system_monitor",
     (url) => fetch(url).then((res) => res.json()),
-    { refreshInterval: 3000 }
+    { refreshInterval: 10000 }
   )
 
   const formatMemory = (memory: number) => {
