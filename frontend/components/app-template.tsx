@@ -1,8 +1,3 @@
-import {
-  ChevronDownIcon,
-  CircleIcon,
-} from "@radix-ui/react-icons"
-
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -18,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
 import { Separator } from "@/registry/default/ui/separator"
+import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
+
 import { cn } from "@/lib/utils"
 
 export function AppTemplate({
@@ -32,16 +29,11 @@ export function AppTemplate({
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{name}</CardTitle>
-          <CardDescription>
-            {description}
-          </CardDescription>
+          <CardDescription>{description}</CardDescription>
         </div>
-        <Button variant="default">
-          Deploy
-        </Button>
+        <Button variant="default">Deploy</Button>
       </CardHeader>
-      <CardContent>
-      </CardContent>
+      <CardContent></CardContent>
     </Card>
   )
 }

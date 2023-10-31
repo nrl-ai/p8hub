@@ -1,6 +1,5 @@
 "use client"
 
-import { Icons } from "@/components/icons"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -12,6 +11,8 @@ import {
 } from "@/registry/default/ui/card"
 import { Input } from "@/registry/default/ui/input"
 import { Label } from "@/registry/default/ui/label"
+
+import { Icons } from "@/components/icons"
 
 export function CardsCreateAccount() {
   return (
@@ -27,10 +28,6 @@ export function CardsCreateAccount() {
           <Button variant="outline">
             <Icons.gitHub className="mr-2 h-4 w-4" />
             Github
-          </Button>
-          <Button variant="outline">
-            <Icons.google className="mr-2 h-4 w-4" />
-            Google
           </Button>
         </div>
         <div className="relative">

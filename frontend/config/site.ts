@@ -2,8 +2,7 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "P8Hub",
-  description:
-    "Host your own Generative AI Services.",
+  description: "Host your own Generative AI Services.",
   mainNav: [
     {
       title: "Information",

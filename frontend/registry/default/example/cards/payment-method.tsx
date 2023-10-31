@@ -1,6 +1,5 @@
 "use client"
 
-import { Icons } from "@/components/icons"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -20,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
+
+import { Icons } from "@/components/icons"
 
 export function CardsPaymentMethod() {
   return (

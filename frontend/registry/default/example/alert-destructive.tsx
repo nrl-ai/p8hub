@@ -1,10 +1,9 @@
-import { AlertCircle } from "lucide-react"
-
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@/registry/default/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 export default function AlertDestructive() {
   return (

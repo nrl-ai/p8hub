@@ -1,9 +1,5 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-
 import { Button } from "@/registry/default/ui/button"
 import { Checkbox } from "@/registry/default/ui/checkbox"
 import {
@@ -16,6 +12,9 @@ import {
   FormMessage,
 } from "@/registry/default/ui/form"
 import { toast } from "@/registry/default/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 const items = [
   {
@@ -97,7 +96,7 @@ export default function CheckboxReactHookFormMultiple() {
                         <FormControl>
                           <Checkbox
                             checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) => {
+                            onCheckedChange={(checked: any) => {
                               return checked
                                 ? field.onChange([...field.value, item.id])
                                 : field.onChange(

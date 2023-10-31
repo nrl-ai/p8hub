@@ -1,7 +1,5 @@
 "use client"
 
-import { ChevronDownIcon } from "@radix-ui/react-icons"
-
 import {
   Avatar,
   AvatarFallback,
@@ -28,6 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/registry/default/ui/popover"
+import { ChevronDownIcon } from "@radix-ui/react-icons"
 
 export function CardsTeamMembers() {
   return (

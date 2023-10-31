@@ -1,9 +1,8 @@
 "use client"
 
-import { addDays } from "date-fns"
-
 import { Calendar } from "@/registry/default/ui/calendar"
 import { Card, CardContent } from "@/registry/default/ui/card"
+import { addDays } from "date-fns"
 
 const start = new Date(2023, 5, 5)
 

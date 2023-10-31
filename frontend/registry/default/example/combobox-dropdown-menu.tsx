@@ -1,8 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { Calendar, MoreHorizontal, Tags, Trash, User } from "lucide-react"
-
 import { Button } from "@/registry/default/ui/button"
 import {
   Command,
@@ -25,6 +23,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
+import { Calendar, MoreHorizontal, Tags, Trash, User } from "lucide-react"
 
 const labels = [
   "feature",
@@ -84,7 +83,7 @@ export default function ComboboxDropdownMenu() {
                         <CommandItem
                           key={label}
                           value={label}
-                          onSelect={(value) => {
+                          onSelect={(value: any) => {
                             setLabel(value)
                             setOpen(false)
                           }}

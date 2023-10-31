@@ -1,5 +1,4 @@
 import * as React from "react"
-
 import { ScrollArea } from "@/registry/default/ui/scroll-area"
 import { Separator } from "@/registry/default/ui/separator"
 

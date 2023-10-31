@@ -1,10 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { addDays, format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 import { Button } from "@/registry/default/ui/button"
 import { Calendar } from "@/registry/default/ui/calendar"
 import {
@@ -19,6 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
+import { addDays, format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
 
 export default function DatePickerWithPresets() {
   const [date, setDate] = React.useState<Date>()
@@ -39,7 +39,7 @@ export default function DatePickerWithPresets() {
       </PopoverTrigger>
       <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
         <Select
-          onValueChange={(value) =>
+          onValueChange={(value: any) =>
             setDate(addDays(new Date(), parseInt(value)))
           }
         >

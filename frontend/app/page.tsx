@@ -1,8 +1,9 @@
-import { ServiceCard } from "@/components/service-card"
-import { PlusCircledIcon } from "@radix-ui/react-icons"
 import { Button } from "@/registry/default/ui/button"
-import { SystemMonitor } from "@/components/system-monitor"
+import { PlusCircledIcon } from "@radix-ui/react-icons"
+
 import { AppTemplate } from "@/components/app-template"
+import { ServiceCard } from "@/components/service-card"
+import { SystemMonitor } from "@/components/system-monitor"
 
 const appTemplates = [
   {
@@ -70,30 +71,28 @@ export default function IndexPage() {
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {
-          runningServices.map((service) => (
-            <ServiceCard
-              key={service.name}
-              name={service.name}
-              description={service.description}
-              status={service.status}
-            />
-          ))
-        }
+        {runningServices.map((service) => (
+          <ServiceCard
+            key={service.name}
+            name={service.name}
+            description={service.description}
+            status={service.status}
+          />
+        ))}
       </div>
       <div className="flex items-center justify-between space-y-2 mt-4">
-        <h2 className="text-2xl font-bold tracking-tight">Deploy New Services</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Deploy New Services
+        </h2>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {
-          appTemplates.map((service) => (
-            <AppTemplate
-              key={service.name}
-              name={service.name}
-              description={service.description}
-            />
-          ))
-        }
+        {appTemplates.map((service) => (
+          <AppTemplate
+            key={service.name}
+            name={service.name}
+            description={service.description}
+          />
+        ))}
       </div>
     </section>
   )

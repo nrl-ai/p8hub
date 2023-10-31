@@ -1,5 +1,3 @@
-import { Copy } from "lucide-react"
-
 import { Button } from "@/registry/default/ui/button"
 import {
   Dialog,
@@ -13,6 +11,7 @@ import {
 } from "@/registry/default/ui/dialog"
 import { Input } from "@/registry/default/ui/input"
 import { Label } from "@/registry/default/ui/label"
+import { Copy } from "lucide-react"
 
 export default function DialogCloseButton() {
   return (

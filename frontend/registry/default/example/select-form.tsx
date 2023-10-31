@@ -1,10 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-
 import { Button } from "@/registry/default/ui/button"
 import {
   Form,
@@ -23,6 +19,9 @@ import {
   SelectValue,
 } from "@/registry/default/ui/select"
 import { toast } from "@/registry/default/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 const FormSchema = z.object({
   email: z

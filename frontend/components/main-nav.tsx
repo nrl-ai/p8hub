@@ -1,10 +1,10 @@
 import * as React from "react"
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
+import Logo from "@/public/logo.svg"
 
 import { NavItem } from "@/types/nav"
 import { cn } from "@/lib/utils"
-import Logo from "@/public/logo.svg"
 
 interface MainNavProps {
   items?: NavItem[]

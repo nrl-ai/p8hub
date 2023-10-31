@@ -1,6 +1,5 @@
 import * as React from "react"
 import Image from "next/image"
-
 import { ScrollArea, ScrollBar } from "@/registry/default/ui/scroll-area"
 
 export interface Artwork {

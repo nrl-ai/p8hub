@@ -1,8 +1,3 @@
-import {
-  ChevronDownIcon,
-  CircleIcon,
-} from "@radix-ui/react-icons"
-
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -21,6 +16,8 @@ import {
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
 import { Separator } from "@/registry/default/ui/separator"
+import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
+
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
@@ -68,7 +65,9 @@ export function ServiceCard({
       <CardContent>
         <div className="flex space-x-4 text-sm text-muted-foreground">
           <div className="flex items-center">
-            <CircleIcon className={cn("mr-1 h-4 w-4", "fill-green-500 text-green-400")} />
+            <CircleIcon
+              className={cn("mr-1 h-4 w-4", "fill-green-500 text-green-400")}
+            />
             {status}
           </div>
           <div>Created April 2023</div>

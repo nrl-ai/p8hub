@@ -1,7 +1,4 @@
 import * as React from "react"
-import { Check, Plus, Send } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 import {
   Avatar,
   AvatarFallback,
@@ -37,6 +34,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/registry/default/ui/tooltip"
+import { Check, Plus, Send } from "lucide-react"
+
+import { cn } from "@/lib/utils"
 
 const users = [
   {

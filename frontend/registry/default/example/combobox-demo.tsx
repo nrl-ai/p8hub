@@ -1,9 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 import { Button } from "@/registry/default/ui/button"
 import {
   Command,
@@ -17,6 +14,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/registry/default/ui/popover"
+import { Check, ChevronsUpDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
 
 const frameworks = [
   {
@@ -69,7 +69,7 @@ export default function ComboboxDemo() {
               <CommandItem
                 key={framework.value}
                 value={framework.value}
-                onSelect={(currentValue) => {
+                onSelect={(currentValue: any) => {
                   setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
                 }}
