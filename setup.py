@@ -52,7 +52,7 @@ setup(
     url="https://github.com/vietanhdev/p8hub",
     install_requires=get_install_requires(),
     license="Apache License 2.0",
-    keywords="Personal Assistant, Automation, GPT, LLM, Docker",
+    keywords="Platform, Local, Generative AI, GPT, LLM, Stable Diffusion, Docker",
     classifiers=[
         "Natural Language :: English",
         "Operating System :: OS Independent",
@@ -67,6 +67,7 @@ setup(
         "p8hub": [
             "p8hub/frontend-dist/**/*",
             "p8hub/frontend-dist/*",
+            "apps/**/*",
         ]
     },
     include_package_data=True,

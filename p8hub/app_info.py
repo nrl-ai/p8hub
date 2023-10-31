@@ -1,5 +1,5 @@
-__appname__ = "p8hub"
+__appname__ = "P8Hub - Private AI Hub"
 __description__ = (
-    "Private AI Hub - Host your own Generative AI Service"
+    "Private AI Hub - Host and use your own Generative AI Services. Keep everything private."
 )
-__version__ = "0.0.27"
+__version__ = "0.0.1"

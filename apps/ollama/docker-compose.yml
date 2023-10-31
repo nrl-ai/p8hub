@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  ollama:
+    image: ollama/ollama
+    restart: always
+    volumes:
+      - ollama:/root/.ollama
+    environment:
+      - OLLAMA_ORIGINS=*
+    networks:
+      - ollama
+    ports:
+      - 11434:11434
+
+  ollama-web:
+    image: vietanhdev/p8hub-ollama-webui
+    restart: always
+    ports:
+      - 3000:8080
+    networks:
+      - ollama
+
+networks:
+  ollama:
+    driver: bridge
+
+volumes:
+  ollama:
+
