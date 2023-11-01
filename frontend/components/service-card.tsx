@@ -1,14 +1,4 @@
 import { useState } from "react"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/registry/default/ui/alert-dialog"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -23,6 +13,16 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/registry/default/ui/alert-dialog"
 import { Separator } from "@/registry/default/ui/separator"
 import { useToast } from "@/registry/default/ui/use-toast"
 import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
@@ -110,13 +110,9 @@ export function ServiceCard({
                 forceMount
               >
                 <DropdownMenuCheckboxItem>Logs</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  onClick={() => {
-                    setOpen(true)
-                  }}
-                >
-                  Delete
-                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem onClick={
+                  () => {setOpen(true)}
+                }>Delete</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -144,26 +140,12 @@ export function ServiceCard({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              service: <b>{name}</b>
+              This action cannot be undone. This will permanently delete the service: <b>{name}</b>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={() => {
-                setOpen(false)
-              }}
-            >
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                setOpen(false)
-                deleteService(id)
-              }}
-            >
-              Yes. Delete It!
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={() => {setOpen(false)}}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => {setOpen(false); deleteService(id);}}>Yes. Delete It!</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -1,0 +1,8 @@
+version: "3.6"
+
+services:
+  privategpt:
+    image: vietanhdev/p8hub-privategpt
+    restart: always
+    ports:
+      - ${P8HUB_SERVICE_PORT}:8080
