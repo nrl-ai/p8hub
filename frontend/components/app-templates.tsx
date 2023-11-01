@@ -5,6 +5,21 @@ import useSWR from "swr"
 import { AppTemplate } from "./app-template"
 import { AppTemplate as AppTemplateSkeleton } from "./skeletons/app-template"
 
+const COLORS = [
+  "#f55742",
+  "#b6f542",
+  "#42e3f5",
+  "#f54287",
+  "#005fff",
+  "#b9f542",
+  "#42a1f5",
+  "#0800e3",
+  "#f54242",
+  "#42f5b3",
+  "#f5a442",
+  "#f542d4",
+]
+
 export function AppTemplates() {
   const { data: appTemplates } = useSWR(
     "/api/apps",
@@ -21,13 +36,14 @@ export function AppTemplates() {
             name: string
             description: string
             deployable: boolean
-          }) => (
+          }, index) => (
             <AppTemplate
               id={app.id}
               key={app.name}
               name={app.name}
               description={app.description}
               deployable={app.deployable}
+              color={COLORS[index % COLORS.length]}
             />
           )
         )}

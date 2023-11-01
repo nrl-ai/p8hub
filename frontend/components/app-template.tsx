@@ -1,7 +1,6 @@
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -14,15 +13,19 @@ export function AppTemplate({
   name,
   description,
   deployable,
+  color,
 }: {
   id: string
   name: string
   description: string
   deployable: boolean
+  color: string
 }) {
   return (
-    <Card className="border border-gray-600 rounded-md shadow-sm">
-      <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
+    <Card className="border border-gray-600 rounded-md shadow-sm overflow-hidden">
+      <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0 border-l-8" style={{
+        borderColor: color,
+      }}>
         <div className="space-y-1">
           <CardTitle className={!deployable ? "text-gray-500" : ""}>
             {name}
@@ -49,7 +52,6 @@ export function AppTemplate({
           </Button>
         )}
       </CardHeader>
-      <CardContent></CardContent>
     </Card>
   )
 }
