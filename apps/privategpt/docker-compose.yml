@@ -1,7 +1,7 @@
 version: "3.6"
 
 services:
-  privategpt:
+  web:
     image: vietanhdev/p8hub-privategpt
     restart: always
     ports:

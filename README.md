@@ -10,6 +10,7 @@ Some features that I want to add to this project:
 - [x] Service management (start, stop/delete).
 - [x] General chatbot service with Ollama.
 - [x] Document chat service with PrivateGPT.
+- [x] Teachable AI - Teach the computer to classify images - STEAM.
 - [ ] Code generation / auto-completion service with LocalPilot.
 - [ ] Image generation service with InvokeAI.
 - [ ] Add documentation.

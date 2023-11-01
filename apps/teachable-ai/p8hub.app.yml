@@ -1,0 +1,7 @@
+id: teachableai
+name: "STEAM: Teachable AI"
+description: Teach the machine to classify images
+version: "0.0.1"
+type: compose
+default_service_port: 3200
+deployable: true

@@ -1,0 +1,8 @@
+version: "3.6"
+
+services:
+  web:
+    image: vietanhdev/p8hub-teachable-ai:latest
+    restart: always
+    ports:
+      - ${P8HUB_SERVICE_PORT}:80
