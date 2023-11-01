@@ -1,3 +1,4 @@
+import enum
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
@@ -13,6 +14,13 @@ session = SessionLocal()
 Base = declarative_base()
 
 
+class ServiceStatus(enum.Enum):
+    initializing = "initializing"
+    running = "running"
+    terminating = "terminating"
+    error = "error"
+    unknown = "unknown"
+
 class Service(Base):
     __tablename__ = "services"
 
@@ -22,6 +30,7 @@ class Service(Base):
     name = Column(String, index=True, nullable=True)
     description = Column(String, nullable=True)
     service_port = Column(Integer, nullable=True)
+    status = Column(String, nullable=False, default=ServiceStatus("initializing").value)
 
 
 Base.metadata.create_all(bind=engine)

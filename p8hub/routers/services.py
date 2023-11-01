@@ -1,5 +1,5 @@
 import logging
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, status
 from pydantic import BaseModel
 from python_on_whales import DockerException
 
@@ -11,11 +11,13 @@ router = APIRouter(
     tags=["Manage Services"],
 )
 
+
 @router.get("")
 def get_services():
     """Get services"""
     services = session.query(Service).all()
     return services
+
 
 class NewServiceRequest(BaseModel):
     app_id: str
@@ -25,48 +27,35 @@ class NewServiceRequest(BaseModel):
 
 
 @router.post("")
-def new_service(data: NewServiceRequest):
+def new_service(data: NewServiceRequest, background_tasks: BackgroundTasks):
     """Run application"""
     try:
-        service_unique_name, port = service_manager.create_service(data.app_id)
+        new_service = service_manager.create_service(
+            data.app_id, data.name, data.description, data.service_port, background_tasks
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
+            detail=str(e),
         )
-
-    # Create Service record
-    app = app_manager.get_app(data.app_id)
-    new_service = Service(
-        service_unique_name=service_unique_name,
-        app_id=data.app_id,
-        name=data.name if data.name else app["name"],
-        description=data.description if data.description else app["description"],
-        service_port=port,
-    )
-    session.add(new_service)
-    session.commit()
 
     return new_service
 
 
 @router.delete("/{service_id}")
-def delete_service(service_id: int):
+def delete_service(service_id: int, background_tasks: BackgroundTasks):
     """Delete service"""
     service = session.query(Service).filter(Service.id == service_id).first()
     if not service:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Service with id {service_id} not found"
+            detail=f"Service with id {service_id} not found",
         )
 
     try:
-        service_manager.delete_service(service.service_unique_name)
+        service_manager.delete_service(service, background_tasks)
     except DockerException as e:
         logging.error(e)
         pass
 
-    session.delete(service)
-    session.commit()
     return {"message": "Service deleted"}
-

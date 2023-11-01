@@ -9,7 +9,7 @@ export function Services() {
   const { data: appTemplates } = useSWR(
     "/api/services",
     (url) => fetch(url).then((res) => res.json()),
-    { refreshInterval: 5000 }
+    { refreshInterval: 3000 }
   )
 
   return (
@@ -20,6 +20,7 @@ export function Services() {
             id: number
             name: string
             description: string
+            status: string
             service_port: number
           }) => <ServiceCard service={service} />
         )}

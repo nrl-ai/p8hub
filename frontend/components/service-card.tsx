@@ -71,9 +71,14 @@ export function ServiceCard({
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
           <Button
             variant="secondary"
-            className="px-3 shadow-none"
+            className={cn(
+              "px-4 shadow-none",
+              "hover:bg-secondary-hover",
+              status !== "running" && "text-gray-300 cursor-not-allowed"
+            )}
             onClick={() => {
-              window.open(`http://localhost:${service_port}`)
+              if (status === "running")
+                window.open(`http://localhost:${service_port}`)
             }}
           >
             Open
@@ -103,7 +108,12 @@ export function ServiceCard({
         <div className="flex space-x-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <CircleIcon
-              className={cn("mr-1 h-4 w-4", "fill-green-500 text-green-400")}
+              className={cn(
+                "mr-1 h-4 w-4",
+                status === "running"
+                  ? "fill-green-500 text-green-400"
+                  : "fill-orange-500 text-orange-400"
+              )}
             />
             {status}
           </div>
