@@ -1,6 +1,6 @@
 # Private AI Hub (P8Hub)
 
-Host and use your own Generative AI Services. Keep everything private.
+Host and use your own AI Services. Keep everything simple and private.
 
 ## TODO
 
