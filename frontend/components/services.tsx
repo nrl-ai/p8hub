@@ -22,7 +22,8 @@ export function Services() {
             description: string
             status: string
             service_port: number
-          }) => <ServiceCard service={service} />
+            created_at: string
+          }, index: number) => <ServiceCard key={index} service={service} />
         )}
       {appTemplates === undefined && (
         <>

@@ -1,5 +1,5 @@
 "use client"
-
+import useSWR from "swr"
 import * as React from "react"
 import {
   Command,
@@ -18,16 +18,26 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-const applications = [
-  {
-    value: "ollama",
-    label: "Ollama",
-  },
-]
 
-export function AppSelector() {
+export function AppSelector({ onSelect }: { onSelect: (value: any) => void }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+
+  const fetcher = (url: string) =>
+    fetch(url).then(r => {
+      return r.json();
+    });
+  const { data: applications } = useSWR(
+    "/api/apps",
+    fetcher,
+    {
+      onSuccess: (data, key, config) => {
+        console.log(data)
+        setValue(data[0].id)
+        onSelect(data[0])
+      }
+    }
+  )
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -39,7 +49,7 @@ export function AppSelector() {
           className="w-[200px] justify-between"
         >
           {value
-            ? applications.find((framework) => framework.value === value)?.label
+            ? applications.find((app: any) => app.id === value)?.name
             : "Select application..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -49,22 +59,23 @@ export function AppSelector() {
           <CommandInput placeholder="Search application..." />
           <CommandEmpty>No application found.</CommandEmpty>
           <CommandGroup>
-            {applications.map((framework) => (
+            {applications.map((app: any) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
+                key={app.id}
+                value={app.id}
                 onSelect={(currentValue: any) => {
                   setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
+                  onSelect(app)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0"
+                    value === app.id ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {framework.label}
+                {app.name}
               </CommandItem>
             ))}
           </CommandGroup>

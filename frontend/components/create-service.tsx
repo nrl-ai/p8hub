@@ -1,3 +1,5 @@
+"use client"
+import { useRef } from "react"
 import { Button } from "@/registry/default/ui/button"
 import {
   Dialog,
@@ -15,6 +17,16 @@ import { PlusCircledIcon } from "@radix-ui/react-icons"
 import { AppSelector } from "@/components/app-selector"
 
 export function CreateService() {
+  const nameField = useRef<HTMLInputElement>(null)
+  const descriptionField = useRef<HTMLInputElement>(null)
+
+  const onAppSelect = (app: any) => {
+    nameField.current?.focus()
+    if (!nameField.current || !descriptionField.current) return
+    nameField.current.value = app.name
+    descriptionField.current.value = app.description
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,15 +45,15 @@ export function CreateService() {
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label htmlFor="application">Application</Label>
-            <AppSelector />
+            <AppSelector onSelect={onAppSelect} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" autoFocus />
+            <Input autoFocus ref={nameField} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="description">Description</Label>
-            <Input id="description" />
+            <Input ref={descriptionField} />
           </div>
         </div>
         <DialogFooter>

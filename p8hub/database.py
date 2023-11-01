@@ -1,8 +1,10 @@
 import enum
+import datetime
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, DateTime, types
 
 from p8hub.config import DATABASE_PATH
 
@@ -12,6 +14,21 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 session = SessionLocal()
 
 Base = declarative_base()
+
+
+class DateTimeUTC(types.TypeDecorator):
+    impl = types.DateTime
+    LOCAL_TIMEZONE = datetime.datetime.utcnow().astimezone().tzinfo
+
+    def process_bind_param(self, value: datetime, dialect):
+        if value.tzinfo is None:
+            value = value.astimezone(self.LOCAL_TIMEZONE)
+        return value.astimezone(datetime.timezone.utc)
+
+    def process_result_value(self, value, dialect):
+        if value.tzinfo is None:
+            return value.replace(tzinfo=datetime.timezone.utc)
+        return value.astimezone(datetime.timezone.utc)
 
 
 class ServiceStatus(enum.Enum):
@@ -31,6 +48,7 @@ class Service(Base):
     description = Column(String, nullable=True)
     service_port = Column(Integer, nullable=True)
     status = Column(String, nullable=False, default=ServiceStatus("initializing").value)
+    created_at = Column(DateTimeUTC, nullable=False, default=datetime.datetime.now)
 
 
 Base.metadata.create_all(bind=engine)

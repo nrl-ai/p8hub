@@ -1,3 +1,4 @@
+import moment from "moment"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -19,7 +20,7 @@ import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
-  service: { id, name, description, status, service_port },
+  service: { id, name, description, status, service_port, created_at },
 }: {
   service: {
     id: number
@@ -27,6 +28,7 @@ export function ServiceCard({
     description: string
     status: string
     service_port: number
+    created_at: string
   }
 }) {
   const { toast } = useToast()
@@ -56,6 +58,8 @@ export function ServiceCard({
         })
       })
   }
+
+  let upTime = moment(created_at).fromNow(true)
 
   return (
     <Card className="border border-gray-600 rounded-md shadow-sm">
@@ -117,7 +121,7 @@ export function ServiceCard({
             />
             {status}
           </div>
-          <div>Uptime: 100d</div>
+          <div>Uptime: {upTime}</div>
         </div>
       </CardContent>
     </Card>
