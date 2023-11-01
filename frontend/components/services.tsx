@@ -16,14 +16,17 @@ export function Services() {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
       {appTemplates &&
         appTemplates.map(
-          (service: {
-            id: number
-            name: string
-            description: string
-            status: string
-            service_port: number
-            created_at: string
-          }, index: number) => <ServiceCard key={index} service={service} />
+          (
+            service: {
+              id: number
+              name: string
+              description: string
+              status: string
+              service_port: number
+              created_at: string
+            },
+            index: number
+          ) => <ServiceCard key={index} service={service} />
         )}
       {appTemplates === undefined && (
         <>

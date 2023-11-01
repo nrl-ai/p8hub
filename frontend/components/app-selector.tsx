@@ -1,5 +1,5 @@
 "use client"
-import useSWR from "swr"
+
 import * as React from "react"
 import {
   Command,
@@ -14,29 +14,28 @@ import {
   PopoverTrigger,
 } from "@/registry/default/ui/popover"
 import { Check, ChevronsUpDown } from "lucide-react"
+import useSWR from "swr"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-
-export function AppSelector({ onSelect }: { onSelect: (value: any) => void }) {
+export function AppSelector({
+  onSelect,
+  appId,
+}: {
+  onSelect: (value: any) => void
+  appId?: string
+}) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
 
   const fetcher = (url: string) =>
-    fetch(url).then(r => {
-      return r.json();
-    });
-  const { data: applications } = useSWR(
-    "/api/apps",
-    fetcher,
-    {
-      onSuccess: (data, key, config) => {
-        console.log(data)
-        setValue(data[0].id)
-        onSelect(data[0])
-      }
-    }
+    fetch(url).then((r) => {
+      return r.json()
+    })
+  const { data: applications } = useSWR("/api/apps", fetcher)
+
+  const filteredApplications = applications?.filter(
+    (app: any) => app?.deployable === true || app?.deployable === undefined
   )
 
   return (
@@ -48,8 +47,8 @@ export function AppSelector({ onSelect }: { onSelect: (value: any) => void }) {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? applications.find((app: any) => app.id === value)?.name
+          {appId
+            ? filteredApplications.find((app: any) => app.id === appId)?.name
             : "Select application..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -59,12 +58,11 @@ export function AppSelector({ onSelect }: { onSelect: (value: any) => void }) {
           <CommandInput placeholder="Search application..." />
           <CommandEmpty>No application found.</CommandEmpty>
           <CommandGroup>
-            {applications.map((app: any) => (
+            {filteredApplications.map((app: any) => (
               <CommandItem
                 key={app.id}
                 value={app.id}
                 onSelect={(currentValue: any) => {
-                  setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
                   onSelect(app)
                 }}
@@ -72,7 +70,7 @@ export function AppSelector({ onSelect }: { onSelect: (value: any) => void }) {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === app.id ? "opacity-100" : "opacity-0"
+                    appId === app.id ? "opacity-100" : "opacity-0"
                   )}
                 />
                 {app.name}

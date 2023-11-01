@@ -1,4 +1,3 @@
-import moment from "moment"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -16,6 +15,7 @@ import {
 import { Separator } from "@/registry/default/ui/separator"
 import { useToast } from "@/registry/default/ui/use-toast"
 import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
+import moment from "moment"
 
 import { cn } from "@/lib/utils"
 
@@ -66,11 +66,7 @@ export function ServiceCard({
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{name}</CardTitle>
-          <CardDescription>
-            {description}
-            <br />
-            <b>Port:</b> {service_port}
-          </CardDescription>
+          <CardDescription>{description}</CardDescription>
         </div>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
           <Button
@@ -119,9 +115,10 @@ export function ServiceCard({
                   : "fill-orange-500 text-orange-400"
               )}
             />
-            {status}
+            {status.toUpperCase()}
           </div>
           <div>Uptime: {upTime}</div>
+          <div>Service Port: {service_port}</div>
         </div>
       </CardContent>
     </Card>
