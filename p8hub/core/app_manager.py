@@ -1,5 +1,6 @@
 import os
 import yaml
+import pathlib
 
 from .exceptions import AppNotFound
 
@@ -7,6 +8,7 @@ class AppManager:
     """Manage applications"""
 
     def __init__(self, apps_dir: str="apps"):
+        pathlib.Path(apps_dir).mkdir(parents=True, exist_ok=True)
         self.apps_dir = apps_dir
         self.apps = []
         self.load_apps()

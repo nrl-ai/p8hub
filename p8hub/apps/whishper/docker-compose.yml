@@ -7,8 +7,8 @@ services:
       - .env
     restart: unless-stopped
     volumes:
-      - ./whishper_data/db_data:/data/db
-      - ./whishper_data/db_data/logs/:/var/log/mongodb/
+      - whishper_data_db_data:/data/db
+      - whishper_data_db_data_logs:/var/log/mongodb/
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-whishper}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS:-whishper}
@@ -25,8 +25,8 @@ services:
     image: libretranslate/libretranslate:latest
     restart: unless-stopped
     volumes:
-      - ./whishper_data/libretranslate/data:/home/libretranslate/.local/share
-      - ./whishper_data/libretranslate/cache:/home/libretranslate/.local/cache
+      - whishper_data_libretranslate_data:/home/libretranslate/.local/share
+      - whishper_data_libretranslate_cache:/home/libretranslate/.local/cache
     env_file:
       - .env
     tty: true
@@ -45,8 +45,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./whishper_data/whisper_models:/app/models
-      - ./whishper_data/uploads:/app/uploads
+      - whishper_data_whisper_models:/app/models
+      - whishper_data_uploads:/app/uploads
     environment:
       - WHISPER_MODELS_DIR=/app/models
       - UPLOAD_DIR=/app/uploads
@@ -59,7 +59,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./whishper_data/uploads:/app/uploads
+      - whishper_data_uploads:/app/uploads
     restart: unless-stopped
     depends_on:
       mongo:
@@ -90,7 +90,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./whishper_data/uploads:/app/uploads
+      - whishper_data_uploads:/app/uploads
     depends_on:
       whishper-backend:
         condition: service_healthy
@@ -102,4 +102,12 @@ services:
 networks:
   whishper:
     driver: bridge
+
+volumes:
+  whishper_data_db_data:
+  whishper_data_db_data_logs:
+  whishper_data_libretranslate_data:
+  whishper_data_libretranslate_cache:
+  whishper_data_whisper_models:
+  whishper_data_uploads:
 

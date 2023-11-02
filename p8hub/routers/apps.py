@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from p8hub.globals import app_manager
+from p8hub import globals
 
 
 router = APIRouter(
@@ -9,5 +9,5 @@ router = APIRouter(
 
 @router.get("")
 async def apps():
-    return app_manager.get_apps()
+    return globals.app_manager.get_apps()
 

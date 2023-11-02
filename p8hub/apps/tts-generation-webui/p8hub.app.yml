@@ -4,4 +4,4 @@ description: Generate audio (Bark, MusicGen + AudioGen, Tortoise, RVC, Vocos, De
 version: "0.0.1"
 type: compose
 default_service_port: 3500
-deployable: false
+deployable: true

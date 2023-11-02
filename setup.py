@@ -26,9 +26,11 @@ def get_install_requires():
         "fastapi==0.96.0",
         "SQLAlchemy==2.0.15",
         "alembic==1.11.1",
-        "requests",
+        "requests==2.31.0",
         "uvicorn==0.23.2",
-        "PyYAML==6.0.1"
+        "PyYAML==6.0.1",
+        "psutil==5.9.6",
+        "python-on-whales==0.65.0",
     ]
 
     return install_requires
@@ -68,7 +70,8 @@ setup(
         "p8hub": [
             "p8hub/frontend-dist/**/*",
             "p8hub/frontend-dist/*",
-            "apps/**/*",
+            "p8hub/apps/**/*",
+            "p8hub/apps/*",
         ]
     },
     include_package_data=True,

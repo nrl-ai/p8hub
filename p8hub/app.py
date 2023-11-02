@@ -12,8 +12,11 @@ from p8hub.app_info import __appname__, __description__, __version__
 from p8hub.config import DATA_ROOT
 from p8hub.database import engine
 from p8hub.routers import apps, system_monitor, services
-from p8hub.utils import extract_frontend_dist
+from p8hub.utils import extract_frontend_dist, extract_apps
 from p8hub.database import Base
+from p8hub.core.app_manager import AppManager
+from p8hub.core.service_manager import ServiceManager
+from p8hub import globals
 
 
 def main():
@@ -49,6 +52,14 @@ def main():
     logging.info("Extracting frontend distribution...")
     static_folder = os.path.abspath(os.path.join(DATA_ROOT, "frontend-dist"))
     extract_frontend_dist(static_folder)
+
+    logging.info("Extracting apps...")
+    static_folder = os.path.abspath(os.path.join(DATA_ROOT, "apps"))
+    extract_apps(static_folder)
+
+    # Initialize globals
+    globals.app_manager = AppManager(apps_dir=os.path.join(DATA_ROOT, "apps"))
+    globals.service_manager = ServiceManager(globals.app_manager)
 
     logging.info("Creating database tables...")
     Base.metadata.create_all(bind=engine)
