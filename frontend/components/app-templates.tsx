@@ -36,7 +36,7 @@ export function AppTemplates() {
             name: string
             description: string
             deployable: boolean
-          }, index) => (
+          }, index: number) => (
             <AppTemplate
               id={app.id}
               key={app.name}

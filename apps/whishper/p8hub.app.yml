@@ -1,0 +1,7 @@
+id: whishper
+name: Whishper
+description: "Transcribe any media to text: audio, video, etc."
+version: "0.0.1"
+type: compose
+default_service_port: 3300
+deployable: true

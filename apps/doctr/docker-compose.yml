@@ -1,0 +1,9 @@
+version: "3.6"
+
+services:
+  web:
+    image: vietanhdev/p8hub-doctr
+    restart: always
+    ports:
+      - ${P8HUB_SERVICE_PORT}:80
+    command: streamlit run app.py --server.port 80 --server.headless true

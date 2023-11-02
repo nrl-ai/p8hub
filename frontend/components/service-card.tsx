@@ -128,10 +128,10 @@ export function ServiceCard({
                     : "fill-orange-500 text-orange-400"
                 )}
               />
-              {status.toUpperCase()}
+              {status.toUpperCase().replace("_", " ")}
             </div>
-            <div>Uptime: {upTime}</div>
-            <div>Service Port: {service_port}</div>
+            <div>Created: {upTime}</div>
+            <div>Service Port: {service_port ? service_port : "not available"}</div>
           </div>
         </CardContent>
       </Card>

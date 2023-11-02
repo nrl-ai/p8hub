@@ -1,0 +1,7 @@
+id: doctr
+name: "docTR (Text Recognition)"
+description: Optical Character Recognition made seamless & accessible to anyone
+version: "0.0.1"
+type: compose
+default_service_port: 3400
+deployable: true

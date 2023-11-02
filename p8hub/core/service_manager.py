@@ -99,11 +99,14 @@ class ServiceManager:
                 compose_project_name=service.service_unique_name,
                 compose_env_file=env_file,
             )
+            service.status = ServiceStatus.pulling_images.value
+            session.commit()
+            docker.compose.pull()
+            service.status = ServiceStatus.initializing.value
+            session.commit()
             docker.compose.up(detach=True)
         except DockerException as e:
             logger.error(e)
-            logger.error(e.stdout.decode("utf-8"))
-            logger.error(e.stderr.decode("utf-8"))
             service.status = ServiceStatus.error.value
             session.commit()
             return
@@ -134,7 +137,7 @@ class ServiceManager:
             name=name if name else app["name"],
             description=description if description else app["description"],
             service_port=port,
-            status=ServiceStatus.initializing.value,
+            status=ServiceStatus.not_started.value,
         )
         session.add(new_service)
         session.commit()

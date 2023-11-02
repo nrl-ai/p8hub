@@ -32,6 +32,9 @@ class DateTimeUTC(types.TypeDecorator):
 
 
 class ServiceStatus(enum.Enum):
+    """Service status"""
+    not_started = "not_started"
+    pulling_images = "pulling_images"
     initializing = "initializing"
     running = "running"
     terminating = "terminating"
@@ -47,7 +50,7 @@ class Service(Base):
     name = Column(String, index=True, nullable=True)
     description = Column(String, nullable=True)
     service_port = Column(Integer, nullable=True)
-    status = Column(String, nullable=False, default=ServiceStatus("initializing").value)
+    status = Column(String, nullable=False, default=ServiceStatus.not_started.value)
     created_at = Column(DateTimeUTC, nullable=False, default=datetime.datetime.now)
 
 
