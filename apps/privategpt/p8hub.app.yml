@@ -1,7 +1,0 @@
-id: privategpt
-name: PrivateGPT
-description: Ask your documents
-version: "0.0.1"
-type: compose
-default_service_port: 3100
-deployable: true

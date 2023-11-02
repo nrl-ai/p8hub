@@ -1,4 +1,6 @@
 import { useState } from "react"
+import Link from "next/link"
+
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -27,7 +29,6 @@ import { Separator } from "@/registry/default/ui/separator"
 import { useToast } from "@/registry/default/ui/use-toast"
 import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 import moment from "moment"
-
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
@@ -78,7 +79,11 @@ export function ServiceCard({
       <Card className="border border-gray-600 rounded-md shadow-sm h-[160px]">
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
-            <CardTitle>{name}</CardTitle>
+            <CardTitle>
+              <Link href={`/services/${id}`} className="hover:underline">
+                {name}
+              </Link>
+            </CardTitle>
             <CardDescription className="h-[50px] overflow-auto">{description}</CardDescription>
           </div>
           <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
@@ -109,9 +114,13 @@ export function ServiceCard({
                 className="w-[200px]"
                 forceMount
               >
-                <DropdownMenuCheckboxItem>Logs</DropdownMenuCheckboxItem>
+                <Link href={`/services/${id}`}>
+                  <DropdownMenuCheckboxItem>
+                    View logs
+                  </DropdownMenuCheckboxItem>
+                </Link>
                 <DropdownMenuCheckboxItem onClick={
-                  () => {setOpen(true)}
+                  () => { setOpen(true) }
                 }>Delete</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -144,8 +153,8 @@ export function ServiceCard({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => {setOpen(false)}}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => {setOpen(false); deleteService(id);}}>Yes. Delete It!</AlertDialogAction>
+            <AlertDialogCancel onClick={() => { setOpen(false) }}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => { setOpen(false); deleteService(id); }}>Yes. Delete It!</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -12,18 +12,16 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-whishper}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS:-whishper}
-    # expose:
-    #   - 27017
     command: ['--logpath', '/var/log/mongodb/mongod.log']
     healthcheck:
       test: mongosh --eval 'db.runCommand("ping").ok' --quiet
       interval: 2s
       timeout: 3s
       retries: 5
+    networks:
+      whishper:
 
-  translate-cpu:
-    container_name: whisper-libretranslate
-    profiles: ["cpu"]
+  translate:
     image: libretranslate/libretranslate:latest
     restart: unless-stopped
     volumes:
@@ -34,57 +32,15 @@ services:
     tty: true
     environment:
       LT_DISABLE_WEB_UI: True
-      #LT_UPDATE_MODELS: True
-    # expose:
-    #   - 5000
     networks:
-      default:
-        aliases:
-          - translate
+      whishper:
     healthcheck:
       test: ['CMD-SHELL', './venv/bin/python scripts/healthcheck.py']
       interval: 2s
       timeout: 3s
       retries: 5
 
-  translate-gpu:
-    container_name: whisper-libretranslate
-    image: libretranslate/libretranslate:latest-cuda
-    profiles: ["gpu"]
-    restart: unless-stopped
-    volumes:
-      - ./whishper_data/libretranslate/data:/home/libretranslate/.local/share
-      - ./whishper_data/libretranslate/cache:/home/libretranslate/.local/cache
-    env_file:
-      - .env
-    user: root
-    tty: true
-    environment:
-      LT_DISABLE_WEB_UI: True
-      LT_LOAD_ONLY: ${LT_LOAD_ONLY:-en,fr,es}
-      #LT_UPDATE_MODELS: True
-    expose:
-      - 5000
-    networks:
-      default:
-        aliases:
-          - translate
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - driver: nvidia
-            count: all
-            capabilities: [gpu]
-    healthcheck:
-      test: ['CMD-SHELL', './venv/bin/python scripts/healthcheck.py']
-      interval: 2s
-      timeout: 3s
-      retries: 5
-
-  transcription-api-cpu:
-    container_name: whisper-api
-    profiles: ["cpu"]
+  transcription-api:
     image: pluja/whishper-transcription-api:latest
     env_file:
       - .env
@@ -95,42 +51,10 @@ services:
       - WHISPER_MODELS_DIR=/app/models
       - UPLOAD_DIR=/app/uploads
     networks:
-      default:
-        aliases:
-          - transcription-api
+      whishper:
     restart: unless-stopped
-    # expose:
-    #   - 8000
-
-  transcription-api-gpu:
-    container_name: whisper-api
-    profiles: ["gpu"]
-    image: pluja/whishper-transcription-api:latest-gpu
-    env_file:
-      - .env
-    volumes:
-      - ./whishper_data/whisper_models:/app/models
-      - ./whishper_data/uploads:/app/uploads
-    environment:
-      WHISPER_MODELS_DIR: /app/models
-      UPLOAD_DIR: /app/uploads
-    restart: unless-stopped
-    expose:
-      - 8000
-    networks:
-      default:
-        aliases:
-          - transcription-api
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - driver: nvidia
-            count: all
-            capabilities: [gpu]
 
   whishper-backend:
-    container_name: whishper-backend
     image: pluja/whishper-backend:latest
     env_file:
       - .env
@@ -145,11 +69,10 @@ services:
       interval: 2s
       timeout: 2s
       retries: 5
-    # expose:
-    #   - 8080
+    networks:
+      whishper:
 
   whishper-frontend:
-    container_name: whishper-web
     image: pluja/whishper-frontend:latest
     env_file:
       - .env
@@ -159,8 +82,8 @@ services:
       PUBLIC_TRANSLATION_API_HOST: ""
       PUBLIC_API_HOST: ${WHISHPER_HOST:-}
       PUBLIC_WHISHPER_PROFILE: ${COMPOSE_PROFILES:-false}
-    # expose:
-    #   - 3000
+    networks:
+      whishper:
 
   nginx:
     image: nginx:1
@@ -173,3 +96,10 @@ services:
         condition: service_healthy
     ports:
       - ${P8HUB_SERVICE_PORT}:80
+    networks:
+      whishper:
+
+networks:
+  whishper:
+    driver: bridge
+
