@@ -2,6 +2,8 @@
 
 Host and use your own AI Services. Keep everything simple and private.
 
+![P8Hub](screenshot.png)
+
 ## Roadmap
 
 Some features are still in development. You can check the progress here.
