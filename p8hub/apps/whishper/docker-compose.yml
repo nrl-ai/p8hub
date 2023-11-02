@@ -12,7 +12,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-whishper}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS:-whishper}
-    command: ['--logpath', '/var/log/mongodb/mongod.log']
+    command: ["--logpath", "/var/log/mongodb/mongod.log"]
     healthcheck:
       test: mongosh --eval 'db.runCommand("ping").ok' --quiet
       interval: 2s
@@ -35,7 +35,7 @@ services:
     networks:
       whishper:
     healthcheck:
-      test: ['CMD-SHELL', './venv/bin/python scripts/healthcheck.py']
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
       interval: 2s
       timeout: 3s
       retries: 5
@@ -110,4 +110,3 @@ volumes:
   whishper_data_libretranslate_cache:
   whishper_data_whisper_models:
   whishper_data_uploads:
-

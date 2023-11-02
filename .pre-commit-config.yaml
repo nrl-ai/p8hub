@@ -23,7 +23,7 @@ repos:
         args:
           - --no-warnings
           - -d
-          - '{extends: relaxed, rules: {line-length: {max: 90}}}'
+          - "{extends: relaxed, rules: {line-length: {max: 90}}}"
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:

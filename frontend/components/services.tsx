@@ -13,27 +13,29 @@ export function Services() {
   )
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-      {appTemplates &&
-        appTemplates.map(
-          (
-            service: {
-              id: number
-              name: string
-              description: string
-              status: string
-              service_port: number
-              created_at: string
-            },
-            index: number
-          ) => <ServiceCard key={index} service={service} />
+    <>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+        {appTemplates &&
+          appTemplates.map(
+            (
+              service: {
+                id: number
+                name: string
+                description: string
+                status: string
+                service_port: number
+                created_at: string
+              },
+              index: number
+            ) => <ServiceCard key={index} service={service} />
+          )}
+        {appTemplates === undefined && (
+          <>
+            <AppTemplateSkeleton />
+            <AppTemplateSkeleton />
+          </>
         )}
-      {appTemplates === undefined && (
-        <>
-          <AppTemplateSkeleton />
-          <AppTemplateSkeleton />
-        </>
-      )}
+      </div>
       {appTemplates && appTemplates.length === 0 && (
         <div className="flex flex-col items-center justify-center w-full h-full p-8 space-y-4 text-center bg-gray-100 dark:bg-gray-800 border border-gray-200 rounded-md">
           <h2 className="text-2xl font-bold tracking-tight">
@@ -44,6 +46,6 @@ export function Services() {
           </p>
         </div>
       )}
-    </div>
+    </>
   )
 }

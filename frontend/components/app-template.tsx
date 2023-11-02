@@ -23,9 +23,12 @@ export function AppTemplate({
 }) {
   return (
     <Card className="border border-gray-600 rounded-md shadow-sm overflow-hidden">
-      <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0 border-l-8 h-full" style={{
-        borderColor: color,
-      }}>
+      <CardHeader
+        className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0 border-l-8 h-full"
+        style={{
+          borderColor: color,
+        }}
+      >
         <div className="space-y-1">
           <CardTitle className={!deployable ? "text-gray-500" : ""}>
             {name}

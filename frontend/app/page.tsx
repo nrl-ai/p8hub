@@ -14,7 +14,7 @@ export default function IndexPage() {
           Private AI Hub
         </h1>
         <p className="max-w-[700px] text-lg text-muted-foreground">
-        Host and use your own AI Services. Keep everything simple and private.
+          Host and use your own AI Services. Keep everything simple and private.
         </p>
       </div>
       <div className="w-full">

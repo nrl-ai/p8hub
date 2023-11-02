@@ -1,5 +1,6 @@
+weight: 4
 id: tts-generation-webui
-name: TTS Generation WebUI (GPU Only)
+name: TTS Generation (GPU Only)
 description: Generate audio (Bark, MusicGen + AudioGen, Tortoise, RVC, Vocos, Demucs) - Only runs on x86_64 + NVIDIA GPUs
 version: "0.0.1"
 type: compose

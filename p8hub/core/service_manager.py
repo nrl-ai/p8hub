@@ -172,3 +172,26 @@ class ServiceManager:
     def delete_service(self, service: Service, background_tasks: BackgroundTasks = None):
         """Delete a service"""
         background_tasks.add_task(self.stop_docker_service, service)
+
+    def get_logs(self, service: Service):
+        """Get logs for a service"""
+        log_file = self.get_service_log_file(service.service_unique_name)
+        if not log_file.exists():
+            return ""
+        with open(log_file, "r") as f:
+            return f.read()
+
+
+    def get_container_logs(self, service: Service):
+        """Get logs for a service"""
+        logger = ServiceManager.get_service_logger(service.service_unique_name)
+        try:
+            docker = DockerClient(
+                compose_project_name=service.service_unique_name,
+            )
+            return docker.compose.logs(tail=100000)
+        except DockerException as e:
+            logger.error(e)
+            pass
+
+        return ""

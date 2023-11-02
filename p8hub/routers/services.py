@@ -71,3 +71,41 @@ def delete_service(service_id: int, background_tasks: BackgroundTasks):
         pass
 
     return {"message": "Service deleted"}
+
+
+@router.get("/{service_id}/logs")
+def logs(service_id: int):
+    """Get service logs"""
+    service = session.query(Service).filter(Service.id == service_id).first()
+    if not service:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Service with id {service_id} not found",
+        )
+
+    try:
+        return globals.service_manager.get_logs(service)
+    except DockerException as e:
+        logging.error(e)
+        pass
+
+    return ""
+
+
+@router.get("/{service_id}/container_logs")
+def logs(service_id: int):
+    """Get service logs"""
+    service = session.query(Service).filter(Service.id == service_id).first()
+    if not service:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Service with id {service_id} not found",
+        )
+
+    try:
+        return globals.service_manager.get_container_logs(service)
+    except DockerException as e:
+        logging.error(e)
+        pass
+
+    return ""

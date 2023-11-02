@@ -1,3 +1,4 @@
+weight: 1
 id: ollama
 name: Ollama LLM
 description: Chat with local LLM with Ollama.ai

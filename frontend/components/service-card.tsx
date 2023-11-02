@@ -1,6 +1,15 @@
 import { useState } from "react"
 import Link from "next/link"
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/registry/default/ui/alert-dialog"
 import { Button } from "@/registry/default/ui/button"
 import {
   Card,
@@ -15,20 +24,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/registry/default/ui/dropdown-menu"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/registry/default/ui/alert-dialog"
 import { Separator } from "@/registry/default/ui/separator"
 import { useToast } from "@/registry/default/ui/use-toast"
 import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 import moment from "moment"
+
 import { cn } from "@/lib/utils"
 
 export function ServiceCard({
@@ -84,7 +84,9 @@ export function ServiceCard({
                 {name}
               </Link>
             </CardTitle>
-            <CardDescription className="h-[50px] overflow-auto">{description}</CardDescription>
+            <CardDescription className="h-[50px] overflow-auto">
+              {description}
+            </CardDescription>
           </div>
           <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
             <Button
@@ -115,13 +117,15 @@ export function ServiceCard({
                 forceMount
               >
                 <Link href={`/services/${id}`}>
-                  <DropdownMenuCheckboxItem>
-                    View logs
-                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>View logs</DropdownMenuCheckboxItem>
                 </Link>
-                <DropdownMenuCheckboxItem onClick={
-                  () => { setOpen(true) }
-                }>Delete</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  onClick={() => {
+                    setOpen(true)
+                  }}
+                >
+                  Delete
+                </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -140,7 +144,9 @@ export function ServiceCard({
               {status.toUpperCase().replace("_", " ")}
             </div>
             <div>Created: {upTime}</div>
-            <div>Service Port: {service_port ? service_port : "not available"}</div>
+            <div>
+              Service Port: {service_port ? service_port : "not available"}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -149,12 +155,26 @@ export function ServiceCard({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the service: <b>{name}</b>
+              This action cannot be undone. This will permanently delete the
+              service: <b>{name}</b>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => { setOpen(false) }}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => { setOpen(false); deleteService(id); }}>Yes. Delete It!</AlertDialogAction>
+            <AlertDialogCancel
+              onClick={() => {
+                setOpen(false)
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setOpen(false)
+                deleteService(id)
+              }}
+            >
+              Yes. Delete It!
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

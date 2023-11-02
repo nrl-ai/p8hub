@@ -24,17 +24,24 @@ export function AppTemplates() {
     (url) => fetch(url).then((res) => res.json()),
     { refreshInterval: 10000 }
   )
+  // Sort by weight
+  const sortedAppTemplates = appTemplates?.sort(
+    (a: { weight: number }, b: { weight: number }) => a.weight - b.weight
+  )
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
       {appTemplates &&
-        appTemplates.map(
-          (app: {
-            id: string
-            name: string
-            description: string
-            deployable: boolean
-          }, index: number) => (
+        sortedAppTemplates.map(
+          (
+            app: {
+              id: string
+              name: string
+              description: string
+              deployable: boolean
+            },
+            index: number
+          ) => (
             <AppTemplate
               id={app.id}
               key={app.name}

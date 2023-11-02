@@ -25,4 +25,3 @@ networks:
 
 volumes:
   ollama:
-

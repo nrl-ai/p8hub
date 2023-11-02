@@ -2,22 +2,23 @@
 
 Host and use your own AI Services. Keep everything simple and private.
 
-## TODO
+## Roadmap
 
-Some features that I want to add to this project:
+Some features are still in development. You can check the progress here.
 
 - [x] Monitor hardware resources.
 - [x] Service management (start, stop/delete).
-- [x] General chatbot service with Ollama.
-- [x] Document chat service with PrivateGPT.
+- [x] Service logs viewer.
+- [x] OllamaLLM - General chatbot service.
 - [x] Teachable AI - Teach the computer to classify images - STEAM.
-- [ ] Code generation / auto-completion service with LocalPilot.
-- [ ] Image generation service with InvokeAI.
+- [x] docTR - Document Text Recognition.
+- [x] Whishper - Text to speech service.
+- [x] TTS Generation (GPU Only)
+- [ ] Image generation service.
 - [ ] Add documentation.
 - [ ] Add tests.
-- [ ] Desktop app.
-- [ ] Custom service.
-
+- [ ] Docker extension.
+- [ ] App editor.
 
 ## I. Installation and Usage
 
@@ -94,7 +95,6 @@ npm run dev
 ```
 
 - Go to <http://localhost:3000/> to see the user interface. Use this address to develop the frontend.
-
 
 ## References
 
