@@ -9,15 +9,13 @@ const COLORS = [
   "#f55742",
   "#b6f542",
   "#42e3f5",
-  "#f54287",
-  "#005fff",
+  "#f54242",
   "#b9f542",
   "#42a1f5",
   "#0800e3",
   "#f54242",
   "#42f5b3",
   "#f5a442",
-  "#f542d4",
 ]
 
 export function AppTemplates() {

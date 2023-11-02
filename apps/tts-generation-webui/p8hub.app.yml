@@ -1,0 +1,7 @@
+id: tts-generation-webui
+name: TTS Generation WebUI
+description: Generate audio (Bark, MusicGen + AudioGen, Tortoise, RVC, Vocos, Demucs)
+version: "0.0.1"
+type: compose
+default_service_port: 3500
+deployable: true

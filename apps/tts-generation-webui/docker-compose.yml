@@ -1,0 +1,16 @@
+version: "3.6"
+
+services:
+  tts-generation-webui:
+    image: "ghcr.io/rsxdalv/tts-generation-webui:main"
+    restart: unless-stopped
+    ports:
+      - ${P8HUB_SERVICE_PORT}:7860
+    container_name: tts-generation-webui
+    deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                device_ids: ['0']
+                capabilities: [gpu]
