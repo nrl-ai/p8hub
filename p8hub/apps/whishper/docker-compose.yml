@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  permission-fix:
+    image: alpine:3.16.2
+    volumes:
+      - whishper_data_db_data:/fix/whishper_data_db_data
+      - whishper_data_db_data_logs:/fix/whishper_data_db_data_logs
+      - whishper_data_libretranslate_data:/fix/whishper_data_libretranslate_data
+      - whishper_data_libretranslate_cache:/fix/whishper_data_libretranslate_cache
+      - whishper_data_whisper_models:/fix/whishper_data_whisper_models
+      - whishper_data_uploads:/fix/whishper_data_uploads
+    command: ["chmod", "-R", "777", "/fix"]
+
   mongo:
     image: mongo
     env_file:
@@ -20,6 +31,9 @@ services:
       retries: 5
     networks:
       whishper:
+    depends_on:
+      permission-fix:
+        condition: service_completed_successfully
 
   translate:
     image: libretranslate/libretranslate:latest
@@ -39,6 +53,9 @@ services:
       interval: 2s
       timeout: 3s
       retries: 5
+    depends_on:
+      permission-fix:
+        condition: service_completed_successfully
 
   transcription-api:
     image: pluja/whishper-transcription-api:latest
@@ -53,6 +70,9 @@ services:
     networks:
       whishper:
     restart: unless-stopped
+    depends_on:
+      permission-fix:
+        condition: service_completed_successfully
 
   whishper-backend:
     image: pluja/whishper-backend:latest
@@ -64,6 +84,8 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+      permission-fix:
+        condition: service_completed_successfully
     healthcheck:
       test: curl --fail http://localhost:8080/api/transcriptions || exit 1
       interval: 2s
@@ -84,6 +106,9 @@ services:
       PUBLIC_WHISHPER_PROFILE: ${COMPOSE_PROFILES:-false}
     networks:
       whishper:
+    depends_on:
+      permission-fix:
+        condition: service_completed_successfully
 
   nginx:
     image: nginx:1
@@ -94,6 +119,8 @@ services:
     depends_on:
       whishper-backend:
         condition: service_healthy
+      permission-fix:
+        condition: service_completed_successfully
     ports:
       - ${P8HUB_SERVICE_PORT}:80
     networks:

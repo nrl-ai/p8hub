@@ -94,10 +94,10 @@ export function ServiceCard({
               className={cn(
                 "px-4 shadow-none",
                 "hover:bg-secondary-hover",
-                status !== "running" && "text-gray-300 cursor-not-allowed"
+                status !== "online" && "text-gray-300 cursor-not-allowed"
               )}
               onClick={() => {
-                if (status === "running")
+                if (status === "online")
                   window.open(`http://localhost:${service_port}`)
               }}
             >
@@ -136,12 +136,12 @@ export function ServiceCard({
               <CircleIcon
                 className={cn(
                   "mr-1 h-4 w-4",
-                  status === "running"
+                  status === "online"
                     ? "fill-green-500 text-green-400"
                     : "fill-orange-500 text-orange-400"
                 )}
               />
-              {status.toUpperCase().replace("_", " ")}
+              {status.toUpperCase().replaceAll("_", " ")}
             </div>
             <div>Created: {upTime}</div>
             <div>

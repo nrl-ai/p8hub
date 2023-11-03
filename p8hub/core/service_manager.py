@@ -3,6 +3,7 @@ import pathlib
 import socket
 import logging
 import shutil
+import time
 
 from python_on_whales import DockerClient, DockerException
 from fastapi import BackgroundTasks
@@ -13,6 +14,7 @@ from p8hub.database import session, Service, ServiceStatus
 
 class ServiceManager:
     """Manage services (app instances)"""
+    MAX_LOG_LINES = 10000
 
     def __init__(self, app_manager: AppManager):
         self.app_manager = app_manager
@@ -84,11 +86,6 @@ class ServiceManager:
 
         # Create .env file
         env_file = ServiceManager.make_service_env_file(service.service_unique_name)
-        usable_port = ServiceManager.find_usable_port(app["default_service_port"], logger=logger)
-        logger.info(f"Using port {usable_port}")
-        with open(env_file, "a") as f:
-            f.write(f"P8HUB_SERVICE_PORT={usable_port}\n")
-
         app_dir = pathlib.Path(app["app_dir"])
         docker_compose_file = app_dir / "docker-compose.yml"
 
@@ -102,9 +99,22 @@ class ServiceManager:
             service.status = ServiceStatus.pulling_images.value
             session.commit()
             docker.compose.pull()
+
+            # Find a usable port and update .env file
+            usable_port = ServiceManager.find_usable_port(app["default_service_port"], logger=logger)
+            logger.info(f"Using port {usable_port}")
+            with open(env_file, "a") as f:
+                f.write(f"P8HUB_SERVICE_PORT={usable_port}\n")
             service.status = ServiceStatus.initializing.value
             session.commit()
             docker.compose.up(detach=True)
+
+            # Wait for service port to be available
+            service.status = ServiceStatus.waiting_to_online.value
+            session.commit()
+            while ServiceManager.is_free_port(usable_port):
+                time.sleep(2)
+                logger.debug(f"Waiting for service port {usable_port}")
         except DockerException as e:
             logger.error(e)
             service.status = ServiceStatus.error.value
@@ -112,7 +122,7 @@ class ServiceManager:
             return
 
         # Update service status
-        service.status = ServiceStatus.running.value
+        service.status = ServiceStatus.online.value
         service.service_port = usable_port
         session.commit()
 
@@ -189,7 +199,7 @@ class ServiceManager:
             docker = DockerClient(
                 compose_project_name=service.service_unique_name,
             )
-            return docker.compose.logs(tail=100000)
+            return docker.compose.logs(tail=ServiceManager.MAX_LOG_LINES)
         except DockerException as e:
             logger.error(e)
             pass

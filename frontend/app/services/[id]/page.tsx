@@ -1,10 +1,11 @@
 "use client"
-
 import Link from "next/link"
-import { ChevronDownIcon, CircleIcon } from "@radix-ui/react-icons"
 import moment from "moment"
 import useSWR from "swr"
+import { useState } from "react"
 
+import { CircleIcon } from "@radix-ui/react-icons"
+import { Checkbox } from "@/registry/default/ui/checkbox"
 import { cn } from "@/lib/utils"
 
 export default function ServicePage({ params }: { params: { id: number } }) {
@@ -18,6 +19,7 @@ export default function ServicePage({ params }: { params: { id: number } }) {
     (url) => fetch(url).then((res) => res.json()),
     { refreshInterval: 5000 }
   )
+  const [autoScrollLogs, setAutoScrollLogs] = useState(true)
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -35,12 +37,12 @@ export default function ServicePage({ params }: { params: { id: number } }) {
             <CircleIcon
               className={cn(
                 "mr-1 h-4 w-4",
-                service?.status === "running"
+                service?.status === "online"
                   ? "fill-green-500 text-green-400"
                   : "fill-orange-500 text-orange-400"
               )}
             />
-            {service?.status.toUpperCase().replace("_", " ")}
+            {service?.status.toUpperCase().replaceAll("_", " ")}
           </div>
         )}
         <div>
@@ -52,9 +54,10 @@ export default function ServicePage({ params }: { params: { id: number } }) {
           {moment(service?.created_at).format("LLL")}
         </div>
         <div
-          className="bg-gray-900 text-white p-2 rounded-md max-h-[500px] overflow-y-auto w-full"
+          className="bg-gray-900 text-white p-2 rounded-md h-[500px] overflow-y-auto w-full"
           dangerouslySetInnerHTML={{ __html: logs }}
-        />
+          defaultValue={"Loading..."}
+        ></div>
       </div>
     </section>
   )

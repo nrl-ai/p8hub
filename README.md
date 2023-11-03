@@ -1,6 +1,8 @@
 # Private AI Hub (P8Hub)
 
-Host and use your own AI Services. Keep everything simple and private.
+**"Host and use your own AI Services. Keep everything simple and private."**
+
+In an era where AI is transforming every aspect of our lives, I recognized the need for a private and easy-to-use platform where individuals and small teams could host and utilize their own AI services. The inspiration for P8Hub came from the desire to make AI technologies accessible and private, democratizing them for all.
 
 ![P8Hub](screenshot.png)
 
@@ -11,16 +13,18 @@ Some features are still in development. You can check the progress here.
 - [x] Monitor hardware resources.
 - [x] Service management (start, stop/delete).
 - [x] Service logs viewer.
-- [x] OllamaLLM - General chatbot service.
-- [x] Teachable AI - Teach the computer to classify images - STEAM.
-- [x] docTR - Document Text Recognition.
-- [x] Whishper - Text to speech service.
-- [x] TTS Generation (GPU Only)
+- [x] [OllamaLLM](https://github.com/ollama-webui/ollama-webui) - General chatbot service.
+- [x] **Teachable AI** - Teach the computer to classify images - STEAM.
+- [x] [docTR](https://github.com/mindee/doctr) - Document Text Recognition.
+- [x] [Whishper](https://github.com/pluja/whishper/) - Text to speech service.
+- [x] [TTS Generation](https://github.com/rsxdalv/tts-generation-webui) (GPU Only)
 - [ ] Image generation service.
 - [ ] Add documentation.
 - [ ] Add tests.
 - [ ] Docker extension.
 - [ ] App editor.
+
+The applications were not selected carefully due to limited time. I think many more interesting AI applications can be integrated into P8Hub. If you have any suggestions, please [let me know](https://github.com/vietanhdev/p8hub/pulls) or create a pull request.
 
 ## I. Installation and Usage
 
