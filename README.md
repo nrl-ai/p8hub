@@ -111,7 +111,6 @@ npm run dev
 - Next Template: [https://github.com/shadcn-ui/next-template](https://github.com/shadcn-ui/next-template).
 - PAutoBot: [https://github.com/nrl-ai/pautobot](https://github.com/nrl-ai/pautobot).
 
-
 ![DockerML Hackathon 2023](images/dockerml2023.jpeg)
 
 This project was created for the [Docker AI/ML Hackathon 2023](https://docker.devpost.com/).

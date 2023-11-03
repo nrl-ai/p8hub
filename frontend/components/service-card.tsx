@@ -89,6 +89,18 @@ export function ServiceCard({
             </CardTitle>
             <CardDescription className="h-[50px] overflow-auto">
               {description}
+              {service_port && (
+                <div>
+                  Address:{" "}
+                  <a
+                    href={`http://localhost:${service_port}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    http://localhost:{service_port}
+                  </a>
+                </div>
+              )}
             </CardDescription>
           </div>
           <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">

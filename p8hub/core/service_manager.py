@@ -10,6 +10,7 @@ from fastapi import BackgroundTasks
 
 from p8hub.core.app_manager import AppManager
 from p8hub.database import session, Service, ServiceStatus
+from p8hub import globals as global_data
 
 class ServiceManager:
     """Manage services (app instances)"""
@@ -95,7 +96,9 @@ class ServiceManager:
             docker.compose.pull()
 
             # Find a usable port and update .env file
-            usable_port = self.find_usable_port(app["default_service_port"], logger=logger)
+            usable_port = app["default_service_port"]
+            if global_data.environment == "local":
+                usable_port = self.find_usable_port(app["default_service_port"], logger=logger)
             logger.info(f"Using port {usable_port}")
             with open(env_file, "a") as f:
                 f.write(f"P8HUB_SERVICE_PORT={usable_port}\n")
@@ -104,11 +107,13 @@ class ServiceManager:
             docker.compose.up(detach=True)
 
             # Wait for service port to be available
-            service.status = ServiceStatus.waiting_to_online.value
-            session.commit()
-            while self.is_free_port(usable_port):
-                time.sleep(2)
-                logger.debug(f"Waiting for service port {usable_port}")
+            if global_data.environment == "local":
+                service.status = ServiceStatus.waiting_to_online.value
+                session.commit()
+                while self.is_free_port(usable_port):
+                    time.sleep(2)
+                    logger.debug(f"Waiting for service port {usable_port}")
+
         except DockerException as e:
             logger.error(e)
             service.status = ServiceStatus.error.value

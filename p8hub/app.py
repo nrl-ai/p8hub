@@ -38,6 +38,10 @@ def main():
             os.path.join(os.path.expanduser("~"), "p8hub-data")
         ),
     )
+    parser.add_argument(
+        "--environment",
+        default="local",
+    )
     args = parser.parse_args()
 
     if args.version:
@@ -46,6 +50,9 @@ def main():
 
     logging.info(f"Starting {__appname__}...")
     logging.info(f"Version: {__version__}")
+
+    logging.info(f"Environment: {args.environment}")
+    global_data.environment = args.environment
 
     logging.info(f"Data root: {args.data_root}")
     global_data.data_root = args.data_root

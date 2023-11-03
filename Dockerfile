@@ -40,4 +40,4 @@ COPY MANIFEST.in /workspace
 COPY --from=client-builder /ui/out /workspace/p8hub/frontend-dist
 RUN cd /workspace && pip3 install -e .
 
-CMD python3 -m p8hub.app
+CMD python3 -m p8hub.app --environment extension
