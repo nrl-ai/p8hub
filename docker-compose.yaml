@@ -5,6 +5,6 @@ services:
       - DAC_OVERRIDE
       - FOWNER
     volumes:
-      - /var/lib/docker:/var/lib/docker
+      - /var/run/docker.sock.raw:/var/run/docker.sock
     ports:
       - "18180:5678"

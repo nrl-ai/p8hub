@@ -11,7 +11,7 @@ RUN npm run build
 FROM alpine
 
 ENV PYTHONUNBUFFERED=1
-RUN apk --update --upgrade add python3 python3-dev gcc musl-dev jpeg-dev zlib-dev libffi-dev cairo-dev pango-dev gdk-pixbuf-dev docker-cli
+RUN apk --update --upgrade add python3 python3-dev gcc musl-dev jpeg-dev zlib-dev libffi-dev cairo-dev pango-dev gdk-pixbuf-dev docker-cli docker-compose
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
