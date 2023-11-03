@@ -1,0 +1,15 @@
+{
+  "icon": "p8hub.svg",
+  "vm": {
+    "composefile": "docker-compose.yaml",
+    "exposes": { "socket": "extension-volumes.sock" }
+  },
+  "ui": {
+    "dashboard-tab": {
+      "title": "P8Hub",
+      "root": "/ui",
+      "src": "index.html",
+      "backend": { "socket": "extension-volumes.sock" }
+    }
+  }
+}

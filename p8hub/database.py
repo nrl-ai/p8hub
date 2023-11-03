@@ -1,15 +1,18 @@
 import enum
 import datetime
+import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, String, DateTime, types
+from sqlalchemy import Column, Integer, String, types
 
-from p8hub.config import DATABASE_PATH
+from p8hub import globals as globals_data
 
-DATABASE_URL = "sqlite:///{}".format(DATABASE_PATH)
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+
+database_path = os.path.abspath(os.path.join(globals_data.data_root, "p8hub.db"))
+database_url = "sqlite:///{}".format(database_path)
+engine = create_engine(database_url, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 session = SessionLocal()
 

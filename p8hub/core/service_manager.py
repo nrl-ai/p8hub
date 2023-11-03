@@ -9,54 +9,50 @@ from python_on_whales import DockerClient, DockerException
 from fastapi import BackgroundTasks
 
 from p8hub.core.app_manager import AppManager
-from p8hub.config import DATA_ROOT
 from p8hub.database import session, Service, ServiceStatus
 
 class ServiceManager:
     """Manage services (app instances)"""
     MAX_LOG_LINES = 10000
 
-    def __init__(self, app_manager: AppManager):
+    def __init__(self, app_manager: AppManager, data_root: str):
         self.app_manager = app_manager
+        self.data_root = data_root
 
-    @staticmethod
-    def get_service_unique_name(app_id: str):
+    def get_service_unique_name(self, app_id: str):
         """Generate a unique service id"""
         return app_id + "-" + str(uuid.uuid4())
 
-    @staticmethod
-    def is_free_port(port: int):
+    def is_free_port(self, port: int):
         """Check if a port is free"""
         a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         location = ("127.0.0.1", port)
         result_of_check = a_socket.connect_ex(location)
         return result_of_check
 
-    @staticmethod
-    def find_usable_port(target_port: int, logger: logging.Logger = None):
+    def find_usable_port(self, target_port: int, logger: logging.Logger = None):
         """Find a usable port"""
         logger.debug(f"Finding usable port. Initial: {target_port}")
         for port in range(target_port, 65535):
             logger.debug(f"Checking port {port}")
-            if ServiceManager.is_free_port(port):
+            if self.is_free_port(port):
                 return port
         return None
 
-    @staticmethod
-    def get_service_data_dir(service_unique_name: str, create_if_not_exists: bool = False):
+    def get_service_data_dir(self, service_unique_name: str, create_if_not_exists: bool = False):
         """Get the data directory for a service"""
-        data_dir = pathlib.Path(DATA_ROOT) / "services" / service_unique_name
+        data_dir = pathlib.Path(self.data_root) / "services" / service_unique_name
         if create_if_not_exists:
             data_dir.mkdir(parents=True, exist_ok=True)
         return data_dir
 
-    @staticmethod
-    def get_service_log_file(service_unique_name: str):
-        """Get the log file for a service"""
-        return ServiceManager.get_service_data_dir(service_unique_name, create_if_not_exists=True) / "service.log"
 
-    @staticmethod
-    def get_service_logger(service_unique_name: str):
+    def get_service_log_file(self, service_unique_name: str):
+        """Get the log file for a service"""
+        return self.get_service_data_dir(service_unique_name, create_if_not_exists=True) / "service.log"
+
+
+    def get_service_logger(self, service_unique_name: str):
         """Get a logger for a service.
         Log files will be saved in the service data directory.
         """
@@ -64,28 +60,26 @@ class ServiceManager:
         logger.setLevel(logging.INFO)
         if logger.hasHandlers():
             return logger
-        log_file = ServiceManager.get_service_log_file(service_unique_name)
+        log_file = self.get_service_log_file(service_unique_name)
         handler = logging.FileHandler(log_file)
         handler.setLevel(logging.INFO)
         logger.addHandler(handler)
         return logger
 
-    @staticmethod
-    def make_service_env_file(service_unique_name: str):
+    def make_service_env_file(self, service_unique_name: str):
         """Create a .env file for a service and return the path to the file"""
-        env_file = ServiceManager.get_service_data_dir(service_unique_name, create_if_not_exists=True) / ".env"
+        env_file = self.get_service_data_dir(service_unique_name, create_if_not_exists=True) / ".env"
         with open(env_file, "w") as f:
             f.write(f"SERVICE_UNIQUE_NAME={service_unique_name}\n")
         return env_file
 
-    @staticmethod
-    def run_docker_service(app: dict, service: Service):
+    def run_docker_service(self, app: dict, service: Service):
         """Run a docker service"""
-        logger = ServiceManager.get_service_logger(service.service_unique_name)
+        logger = self.get_service_logger(service.service_unique_name)
         logger.info(f"Running service {service.service_unique_name}")
 
         # Create .env file
-        env_file = ServiceManager.make_service_env_file(service.service_unique_name)
+        env_file = self.make_service_env_file(service.service_unique_name)
         app_dir = pathlib.Path(app["app_dir"])
         docker_compose_file = app_dir / "docker-compose.yml"
 
@@ -101,7 +95,7 @@ class ServiceManager:
             docker.compose.pull()
 
             # Find a usable port and update .env file
-            usable_port = ServiceManager.find_usable_port(app["default_service_port"], logger=logger)
+            usable_port = self.find_usable_port(app["default_service_port"], logger=logger)
             logger.info(f"Using port {usable_port}")
             with open(env_file, "a") as f:
                 f.write(f"P8HUB_SERVICE_PORT={usable_port}\n")
@@ -112,7 +106,7 @@ class ServiceManager:
             # Wait for service port to be available
             service.status = ServiceStatus.waiting_to_online.value
             session.commit()
-            while ServiceManager.is_free_port(usable_port):
+            while self.is_free_port(usable_port):
                 time.sleep(2)
                 logger.debug(f"Waiting for service port {usable_port}")
         except DockerException as e:
@@ -156,10 +150,10 @@ class ServiceManager:
         background_tasks.add_task(self.run_docker_service, app, new_service)
         return new_service
 
-    @staticmethod
-    def stop_docker_service(service: Service):
+
+    def stop_docker_service(self, service: Service):
         """Stop a docker service"""
-        logger = ServiceManager.get_service_logger(service.service_unique_name)
+        logger = self.get_service_logger(service.service_unique_name)
         logger.info(f"Stopping service {service.service_unique_name}")
         service.status = ServiceStatus.terminating.value
         session.commit()
@@ -175,7 +169,7 @@ class ServiceManager:
         session.commit()
 
         # Delete data folder
-        data_dir = ServiceManager.get_service_data_dir(service.service_unique_name)
+        data_dir = self.get_service_data_dir(service.service_unique_name)
         if data_dir.exists():
             shutil.rmtree(data_dir)
 
@@ -194,12 +188,12 @@ class ServiceManager:
 
     def get_container_logs(self, service: Service):
         """Get logs for a service"""
-        logger = ServiceManager.get_service_logger(service.service_unique_name)
+        logger = self.get_service_logger(service.service_unique_name)
         try:
             docker = DockerClient(
                 compose_project_name=service.service_unique_name,
             )
-            return docker.compose.logs(tail=ServiceManager.MAX_LOG_LINES)
+            return docker.compose.logs(tail=self.MAX_LOG_LINES)
         except DockerException as e:
             logger.error(e)
             pass

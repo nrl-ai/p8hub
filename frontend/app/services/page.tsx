@@ -1,25 +1,31 @@
 "use client"
+
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { CircleIcon } from "@radix-ui/react-icons"
 import moment from "moment"
 import useSWR from "swr"
-import { useState } from "react"
 
-import { CircleIcon } from "@radix-ui/react-icons"
-import { Checkbox } from "@/registry/default/ui/checkbox"
 import { cn } from "@/lib/utils"
 
-export default function ServicePage({ params }: { params: { id: number } }) {
-  const { data: service } = useSWR(
-    `/api/services/${params.id}`,
+export default function ServicePage() {
+  const params = useSearchParams()
+  const serviceId = params.get("serviceId")
+  const { data: service, error } = useSWR(
+    `/api/services/${serviceId}`,
     (url) => fetch(url).then((res) => res.json()),
     { refreshInterval: 5000 }
   )
   const { data: logs } = useSWR(
-    `/api/services/${params.id}/container_logs`,
+    `/api/services/${serviceId}/container_logs`,
     (url) => fetch(url).then((res) => res.json()),
     { refreshInterval: 5000 }
   )
-  const [autoScrollLogs, setAutoScrollLogs] = useState(true)
+
+  // TODO: handle error
+  if (service && service?.detail) {
+    window.location.href = "/"
+  }
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -42,7 +48,7 @@ export default function ServicePage({ params }: { params: { id: number } }) {
                   : "fill-orange-500 text-orange-400"
               )}
             />
-            {service?.status.toUpperCase().replaceAll("_", " ")}
+            {service?.status?.toUpperCase()?.replaceAll("_", " ")}
           </div>
         )}
         <div>
