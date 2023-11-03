@@ -8,7 +8,9 @@ In an era where AI is transforming every aspect of our lives, I recognized the n
 
 ## Architecture
 
-![Architecturer](images/p8hub-architecture.svg)
+![Architecture](images/p8hub-architecture.svg)
+
+The architecture of P8Hub consists of two main components: a FastAPI backend and a Next.js frontend. The backend and frontend communicate with each other via REST API. For ease of deployment, I build frontend into static files and serve them from the backend. The interaction with Docker (running, stopping, and monitoring services) is done via [Python on Whales](https://pypi.org/project/python-on-whales/) package.
 
 ## Features
 
@@ -22,10 +24,10 @@ Some features are still in development. You can check the progress here.
 - [x] [docTR](https://github.com/mindee/doctr) - Document Text Recognition.
 - [x] [Whishper](https://github.com/pluja/whishper/) - Text to speech service.
 - [x] [TTS Generation](https://github.com/rsxdalv/tts-generation-webui) (GPU Only)
+- [x] Docker extension.
 - [ ] Image generation service.
 - [ ] Add documentation.
 - [ ] Add tests.
-- [ ] Docker extension.
 - [ ] App editor.
 
 The applications were not selected carefully due to limited time. I think many more interesting AI applications can be integrated into P8Hub. If you have any suggestions, please [let me know](https://github.com/vietanhdev/p8hub/pulls) or create a pull request.
@@ -62,6 +64,23 @@ You can also run Private AI Hub publicly to your network or change the port with
 ```shell
 p8hub --host 0.0.0.0 --port 8080
 ```
+
+### 3. Docker Extension (Experimental)
+
+Docker Extension allows to extend the functionality of Docker Desktop. We've developed a Docker Extension for P8Hub. You can install it by running:
+
+```shell
+make install-extension
+```
+
+You should see the extension in Docker Desktop's UI.
+
+![P8Hub Docker Extension](images/p8hub-docker-extension-screenshot.png)
+
+**Architecture:**
+
+![P8Hub Docker Extension Architecture](images/p8hub-docker-extension.svg)
+
 
 ## II. Development
 
