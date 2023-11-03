@@ -4,9 +4,13 @@
 
 In an era where AI is transforming every aspect of our lives, I recognized the need for a private and easy-to-use platform where individuals and small teams could host and utilize their own AI services. The inspiration for P8Hub came from the desire to make AI technologies accessible and private, democratizing them for all.
 
-![P8Hub](screenshot.png)
+![P8Hub](images/screenshot.png)
 
-## Roadmap
+## Architecture
+
+![Architecturer](images/p8hub-architecture.svg)
+
+## Features
 
 Some features are still in development. You can check the progress here.
 
@@ -106,3 +110,8 @@ npm run dev
 
 - Next Template: [https://github.com/shadcn-ui/next-template](https://github.com/shadcn-ui/next-template).
 - PAutoBot: [https://github.com/nrl-ai/pautobot](https://github.com/nrl-ai/pautobot).
+
+
+![DockerML Hackathon 2023](images/dockerml2023.jpeg)
+
+This project was created for the [Docker AI/ML Hackathon 2023](https://docker.devpost.com/).
