@@ -26,26 +26,40 @@ export function CreateService({
     id: string
     name: string
     description: string
+    default_port: number
   }
 }) {
   const { toast } = useToast()
   const nameField = useRef<HTMLInputElement>(null)
   const descriptionField = useRef<HTMLInputElement>(null)
+  const servicePortField = useRef<HTMLInputElement>(null)
   const [app, setApp] = useState<any>(defaultApp)
 
   const onAppSelect = (app: any) => {
     nameField.current?.focus()
-    if (!nameField.current || !descriptionField.current) return
+    if (!nameField.current || !descriptionField.current || !servicePortField.current) return
     nameField.current.value = app.name
     descriptionField.current.value = app.description
+    servicePortField.current.value = app.default_port
     setApp(app)
   }
 
   const deployService = async (
     id: string,
     name: string,
-    description: string
+    description: string,
+    port: number
   ) => {
+    // Check if port is an interger number
+    if (!Number.isInteger(Number(port))) {
+      toast({
+        variant: "destructive",
+        title: "Error deploying service",
+        description: "Wrong port format. Please enter an integer number",
+      })
+      return
+    }
+
     await fetch("/api/services", {
       method: "POST",
       headers: {
@@ -55,6 +69,7 @@ export function CreateService({
         app_id: id,
         name: name,
         description: description,
+        service_port: port,
       }),
     })
       .then((res) => {
@@ -105,6 +120,10 @@ export function CreateService({
               defaultValue={app?.description || ""}
             />
           </div>
+          <div className="grid gap-2">
+            <Label htmlFor="port">Service Port</Label>
+            <Input type="number" min={0} max={65535} ref={servicePortField} defaultValue={app?.default_port || 8080} />
+          </div>
         </div>
         <DialogFooter>
           <Button
@@ -120,7 +139,8 @@ export function CreateService({
               deployService(
                 app.id,
                 nameField.current?.value || app.name,
-                descriptionField.current?.value || app.description
+                descriptionField.current?.value || app.description,
+                servicePortField.current?.value || app.default_port
               )
             }}
           >

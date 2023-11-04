@@ -4,11 +4,11 @@
 
 In an era where AI is transforming every aspect of our lives, I recognized the need for a private and easy-to-use platform where individuals and small teams could host and utilize their own AI services. The inspiration for P8Hub came from the desire to make AI technologies accessible and private, democratizing them for all.
 
-![P8Hub](images/screenshot.png)
+![P8Hub](https://raw.githubusercontent.com/vietanhdev/vietanhdev/main/p8hub/screenshot.png)
 
 ## Architecture
 
-![Architecture](images/p8hub-architecture.svg)
+![Architecture](https://raw.githubusercontent.com/vietanhdev/vietanhdev/main/p8hub/p8hub-architecture.svg)
 
 The architecture of P8Hub consists of two main components: a FastAPI backend and a Next.js frontend. The backend and frontend communicate with each other via REST API. For ease of deployment, I build frontend into static files and serve them from the backend. The interaction with Docker (running, stopping, and monitoring services) is done via [Python on Whales](https://pypi.org/project/python-on-whales/) package.
 
@@ -75,11 +75,11 @@ make install-extension
 
 You should see the extension in Docker Desktop's UI.
 
-![P8Hub Docker Extension](images/p8hub-docker-extension-screenshot.png)
+![P8Hub Docker Extension](https://raw.githubusercontent.com/vietanhdev/vietanhdev/main/p8hub/p8hub-docker-extension-screenshot.png)
 
 **Architecture:**
 
-![P8Hub Docker Extension Architecture](images/p8hub-docker-extension.svg)
+![P8Hub Docker Extension Architecture](https://raw.githubusercontent.com/vietanhdev/vietanhdev/main/p8hub/p8hub-docker-extension.svg)
 
 
 ## II. Development
@@ -130,6 +130,6 @@ npm run dev
 - Next Template: [https://github.com/shadcn-ui/next-template](https://github.com/shadcn-ui/next-template).
 - PAutoBot: [https://github.com/nrl-ai/pautobot](https://github.com/nrl-ai/pautobot).
 
-![DockerML Hackathon 2023](images/dockerml2023.jpeg)
+![DockerML Hackathon 2023](https://raw.githubusercontent.com/vietanhdev/vietanhdev/main/p8hub/dockerml2023.jpeg)
 
 This project was created for the [Docker AI/ML Hackathon 2023](https://docker.devpost.com/).

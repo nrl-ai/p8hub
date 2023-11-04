@@ -39,6 +39,7 @@ export function AppTemplates() {
               name: string
               description: string
               deployable: boolean
+              default_service_port: number
             },
             index: number
           ) => (
@@ -48,6 +49,7 @@ export function AppTemplates() {
               name={app.name}
               description={app.description}
               deployable={app.deployable}
+              default_service_port={app.default_service_port}
               color={COLORS[index % COLORS.length]}
             />
           )

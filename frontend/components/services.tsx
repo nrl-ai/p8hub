@@ -6,7 +6,7 @@ import { ServiceCard } from "./service-card"
 import { AppTemplate as AppTemplateSkeleton } from "./skeletons/app-template"
 
 export function Services() {
-  const { data: appTemplates } = useSWR(
+  const { data: services } = useSWR(
     "/api/services",
     (url) => fetch(url).then((res) => res.json()),
     { refreshInterval: 3000 }
@@ -15,8 +15,8 @@ export function Services() {
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-        {appTemplates &&
-          appTemplates.map(
+        {services &&
+          services.map(
             (
               service: {
                 id: number
@@ -29,14 +29,14 @@ export function Services() {
               index: number
             ) => <ServiceCard key={index} service={service} />
           )}
-        {appTemplates === undefined && (
+        {services === undefined && (
           <>
             <AppTemplateSkeleton />
             <AppTemplateSkeleton />
           </>
         )}
       </div>
-      {appTemplates && appTemplates.length === 0 && (
+      {services && services.length === 0 && (
         <div className="flex flex-col items-center justify-center w-full h-full p-8 space-y-4 text-center bg-gray-100 dark:bg-gray-800 border border-gray-200 rounded-md">
           <h2 className="text-2xl font-bold tracking-tight">
             No Services Running

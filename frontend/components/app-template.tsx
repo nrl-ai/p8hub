@@ -13,6 +13,7 @@ export function AppTemplate({
   name,
   description,
   deployable,
+  default_service_port,
   color,
 }: {
   id: string
@@ -20,6 +21,7 @@ export function AppTemplate({
   description: string
   deployable: boolean
   color: string
+  default_service_port: number
 }) {
   return (
     <Card className="border border-gray-600 rounded-md shadow-sm overflow-hidden">
@@ -41,6 +43,7 @@ export function AppTemplate({
               id: id,
               name: name,
               description: description,
+              default_port: default_service_port
             }}
           >
             <Button variant="default">Deploy</Button>

@@ -96,9 +96,11 @@ class ServiceManager:
             docker.compose.pull()
 
             # Find a usable port and update .env file
-            usable_port = app["default_service_port"]
+            if not service.service_port:
+                service.service_port = app["default_service_port"]
+            usable_port = service.service_port
             if global_data.environment == "local":
-                usable_port = self.find_usable_port(app["default_service_port"], logger=logger)
+                usable_port = self.find_usable_port(usable_port, logger=logger)
             logger.info(f"Using port {usable_port}")
             with open(env_file, "a") as f:
                 f.write(f"P8HUB_SERVICE_PORT={usable_port}\n")

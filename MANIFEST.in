@@ -1,1 +1,2 @@
 recursive-include p8hub/frontend-dist *
+recursive-include p8hub/apps *
