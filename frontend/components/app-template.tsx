@@ -35,7 +35,9 @@ export function AppTemplate({
           <CardTitle className={!deployable ? "text-gray-500" : ""}>
             {name}
           </CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardDescription>
+            {description.length < 120 ? description : description.slice(0, 120) + "..."}
+          </CardDescription>
         </div>
         {deployable && (
           <CreateService

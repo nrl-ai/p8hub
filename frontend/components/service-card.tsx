@@ -76,7 +76,7 @@ export function ServiceCard({
 
   return (
     <div className="relative">
-      <Card className="border border-gray-600 rounded-md shadow-sm h-[160px]">
+      <Card className="border border-gray-600 rounded-md shadow-sm h-[180px]">
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
             <CardTitle>
@@ -87,8 +87,8 @@ export function ServiceCard({
                 {name}
               </Link>
             </CardTitle>
-            <CardDescription className="h-[50px] overflow-auto">
-              {description}
+            <CardDescription className="h-[60px] overflow-auto">
+              {description.length < 80 ? description : description.slice(0, 80) + "..."}
               {service_port && (
                 <div>
                   Address:{" "}
