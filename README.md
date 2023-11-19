@@ -1,5 +1,7 @@
 # Private AI Hub (P8Hub)
 
+> +⭐ Follow [vietanhdev](https://twitter.com/vietanhdev) for project updates.
+
 **"Host and use your own AI Services. Keep everything simple and private."**
 
 In an era where AI is transforming every aspect of our lives, I recognized the need for a private and easy-to-use platform where individuals and small teams could host and utilize their own AI services. The inspiration for P8Hub came from the desire to make AI technologies accessible and private, democratizing them for all.
